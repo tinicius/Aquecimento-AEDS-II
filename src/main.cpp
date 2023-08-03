@@ -90,8 +90,8 @@ int main() {
     for (auto w : freq_table) {
         auto menor = heap.top();
 
-        cout << w.first << endl;
-
+        cout << w.first << " " << w.second << endl;
+ 
         if (w.second > menor.second) {
             heap.pop();
             heap.push(w);
@@ -106,7 +106,11 @@ int main() {
         heap.pop();
     }
 
-    for (int i = ans.size() - 1; i >= 0; i--) {
+    // for (int i = ans.size() - 1; i >= 0; i--) {
+    //     cout << ans[i] << " ";
+    // }
+
+    for (int i = 0; i < ans.size(); i++) {
         cout << ans[i] << " ";
     }
 
