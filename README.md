@@ -42,13 +42,13 @@ Já o heap, será implementado usando a estrutura prioriry_queue. Temo paramêtr
 
 Para essa priority_queue poder ser utlizada como uma min-heap, é necessário alterar a função de comparação padrão, já que essa utiliza o primeiro valor do pair para considerar na ordenação.
 
-# Exemplos de entrada e saída
+## Exemplos de entrada e saída
 
 
-# Conclusão
+## Conclusão
 
 
-# Compilação e Execução
+## Compilação e Execução
 
 A estrutura árvore disponibilizada possui um arquivo Makefile que realiza todo o procedimento de compilação e execução. Para tanto, temos as seguintes diretrizes de execução:
 
@@ -58,7 +58,7 @@ A estrutura árvore disponibilizada possui um arquivo Makefile que realiza todo 
 | make | Executa a compilação do programa utilizando o gcc, e o resultado vai para a pasta build |
 | make run | Executa o programa da pasta build após a realização da compilação |
 
-# Contatos
+## Contatos
 
 <div style="display: inline-block;">
 <a href="https://t.me/vini_apereira">
