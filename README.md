@@ -30,13 +30,13 @@ O(n + k * log k + (n - k) * log k + k) podendo ser simplificada para O(n * log k
 
 ## Implementação
 
-## Lendo o arquivo
+### Lendo o arquivo
 
-## Hash
+### Hash
 
 Para implementar a hash, será utilizada a estrutura map. Tendo como paramêtro uma string e um inteiro para armazenar a palavra e a frequência.
 
-## Heap
+### Heap
 
 Já o heap, será implementado usando a estrutura prioriry_queue. Temo paramêtro um pair de string e inteiro. 
 
