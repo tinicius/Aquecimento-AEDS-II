@@ -148,7 +148,9 @@ int main() {
 
     vector<string> ans = getHeapElements(heap);
 
-    showElementsInCorrectOrder(ans);
+    // showElementsInCorrectOrder(ans);
+
+    for (int i = ans.size() - 1; i >= 0; i--) cout << ans[i] << " " << freq_table[ans[i]] << endl;
 
     return 0;
 }

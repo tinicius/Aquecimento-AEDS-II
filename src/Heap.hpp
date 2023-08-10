@@ -11,8 +11,8 @@ using namespace std;
 class Heap {
    private:
     vector<pair<string, int>> array;
+    void heapify_up(int index);
     void heapify_down(int index);
-
    public:
     int size();
     bool empty();
