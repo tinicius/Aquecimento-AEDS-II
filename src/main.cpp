@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <queue>
@@ -9,95 +10,114 @@
 
 using namespace std;
 
-// struct myComp {
-//     constexpr bool operator()(
-//         pair<int, int> const& a,
-//         pair<int, int> const& b)
-//         const noexcept
-//     {
-//         return a.second < b.second;
-//     }
-// };
-
 struct compare {
     bool operator()(pair<string, int> a, pair<string, int> b) {
         return a.second > b.second;
     }
 };
 
-bool isValidChar(char c) {
-    if (c == ' ' || c == (char)10) return false;
+bool isValidWord(string s) {
+    auto expAcents = {"--", "^", "-", " — ", " —", "—", "”", "“", "-”", "——"};
+
+    auto expChar = {'-', '"', '\xE2', '\x80', '\x9D', '\x9C', '\x94'};
+
+    for (auto a : expAcents) {
+        if (s.find(a) != s.npos) return false;
+    }
+
+    for (auto a : expChar) {
+        if (s.find(a) != s.npos) return false;
+    }
 
     return true;
 }
 
-int main() {
-    int k = 10;
+bool isValidChar(char c) {
+    string acents = "áàâãéèêíïóôõúüçÁÀÂÃÉÈÊÍÏÓÔÕÚÜÇ";
 
-    map<string, int> freq_table;
+    if (acents.find(c) != acents.npos) return true;
 
-    priority_queue<pair<string, int>, vector<pair<string, int>>, compare> heap;
+    return iswalnum(c);
+}
 
+void loadStopWords(map<string, int>& sw) {
+    std::ifstream arq("../dataset/stopwords.data");
+
+    if (!arq.is_open()) {
+        std::cerr << "Error opening arq" << std::endl;
+        exit(1);
+    }
+
+    string line;
+
+    while (getline(arq, line)) {
+        sw[line]++;
+    }
+
+    arq.close();
+}
+
+void countWords(map<string, int>& freq_table) {
     FILE* file = fopen("../dataset/input.data", "r");
 
-    char last;
+    if (file == 0) {
+        std::cerr << "Error opening arq" << std::endl;
+        exit(1);
+    }
+
     char aux;
     string word;
 
-    cout << file << endl;
-
     while (fscanf(file, "%c", &aux) > 0) {
         if (isValidChar(aux)) {
-            word += aux;
+            word += tolower(aux);
         } else {
-            // Ignorando '-, /, _' no meio de uma palavra
             if (aux == '-' || aux == '/' || aux == '_') continue;
 
-            if (!word.empty()) {
+            if (!word.empty() and isValidWord(word)) {
                 freq_table[word]++;
             };
 
-            // \n
-            if (aux == (char)10) {
-                // Linha
-            };
-
-            if (last == (char)10 && aux == (char)10) {
-                // Parágrafo
-            };
-
-            // // fim de uma sentença
-            // if (aux == '?' || aux == '!' || aux == '.') {
-
-            // };
-
             word = "";
         }
-
-        last = aux;
     }
 
-    // TODO: lógica pro final do arquivo.
+    fclose(file);
+}
 
-    // Provalmente desnecessário inserir os 10 primeiros de maneira separada
+void initializeHeapWithKElements(
+    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>& heap,
+    map<string, int>& freq_table, map<string, int> sw, int k) {
     int counter = 0;
+
     for (auto w : freq_table) {
         if (counter == k) break;
-        heap.push(w);
-        counter++;
-    }
 
+        if (sw[w.first] == 0) {
+            heap.push(w);
+            counter++;
+        }
+    }
+}
+
+void insertRemainingWordsInHeap(
+    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>& heap,
+    map<string, int>& freq_table, map<string, int> sw) {
     for (auto w : freq_table) {
         auto menor = heap.top();
 
-        cout << w.first << " " << w.second << endl;
- 
         if (w.second > menor.second) {
-            heap.pop();
-            heap.push(w);
+            if (sw[w.first] == 0) {
+                heap.pop();
+                heap.push(w);
+            }
         }
     }
+}
 
+vector<string> getHeapElements(
+    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>&
+        heap) {
     vector<string> ans;
 
     while (!heap.empty()) {
@@ -106,15 +126,31 @@ int main() {
         heap.pop();
     }
 
-    // for (int i = ans.size() - 1; i >= 0; i--) {
-    //     cout << ans[i] << " ";
-    // }
+    return ans;
+}
 
-    for (int i = 0; i < ans.size(); i++) {
-        cout << ans[i] << " ";
-    }
+void showElementsInCorrectOrder(vector<string>& ans) {
+    for (int i = ans.size() - 1; i >= 0; i--) cout << ans[i] << endl;
+}
 
-    fclose(file);
+int main() {
+    int k = 20;
+
+    map<string, int> sw;
+    loadStopWords(sw);
+
+    map<string, int> freq_table;
+    countWords(freq_table);
+
+    priority_queue<pair<string, int>, vector<pair<string, int>>, compare> heap;
+
+    initializeHeapWithKElements(heap, freq_table, sw, k);
+
+    insertRemainingWordsInHeap(heap, freq_table, sw);
+
+    vector<string> ans = getHeapElements(heap);
+
+    showElementsInCorrectOrder(ans);
 
     return 0;
 }
