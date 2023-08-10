@@ -129,6 +129,30 @@ app/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/build
 .PHONY : app/fast
 
+src/Heap.o: src/Heap.cpp.o
+.PHONY : src/Heap.o
+
+# target to build an object file
+src/Heap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Heap.cpp.o
+.PHONY : src/Heap.cpp.o
+
+src/Heap.i: src/Heap.cpp.i
+.PHONY : src/Heap.i
+
+# target to preprocess a source file
+src/Heap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Heap.cpp.i
+.PHONY : src/Heap.cpp.i
+
+src/Heap.s: src/Heap.cpp.s
+.PHONY : src/Heap.s
+
+# target to generate assembly for a file
+src/Heap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/Heap.cpp.s
+.PHONY : src/Heap.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... app"
+	@echo "... src/Heap.o"
+	@echo "... src/Heap.i"
+	@echo "... src/Heap.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

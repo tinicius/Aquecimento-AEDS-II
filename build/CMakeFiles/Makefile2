@@ -81,12 +81,12 @@ clean: CMakeFiles/app.dir/clean
 CMakeFiles/app.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles --progress-num=1,2 "Built target app"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles --progress-num=1,2,3 "Built target app"
 .PHONY : CMakeFiles/app.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/app.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/app.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles 0
 .PHONY : CMakeFiles/app.dir/rule

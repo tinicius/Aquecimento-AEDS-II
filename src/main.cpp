@@ -8,7 +8,7 @@
 #include <queue>
 #include <vector>
 
-#include <Heap
+#include "Heap.hpp"
 
 using namespace std;
 
@@ -87,9 +87,8 @@ void countWords(map<string, int>& freq_table) {
     fclose(file);
 }
 
-void initializeHeapWithKElements(
-    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>& heap,
-    map<string, int>& freq_table, map<string, int> sw, int k) {
+void initializeHeapWithKElements(Heap& heap, map<string, int>& freq_table,
+                                 map<string, int> sw, int k) {
     int counter = 0;
 
     for (auto w : freq_table) {
@@ -102,9 +101,8 @@ void initializeHeapWithKElements(
     }
 }
 
-void insertRemainingWordsInHeap(
-    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>& heap,
-    map<string, int>& freq_table, map<string, int> sw) {
+void insertRemainingWordsInHeap(Heap& heap, map<string, int>& freq_table,
+                                map<string, int> sw) {
     for (auto w : freq_table) {
         auto menor = heap.top();
 
@@ -117,9 +115,7 @@ void insertRemainingWordsInHeap(
     }
 }
 
-vector<string> getHeapElements(
-    priority_queue<pair<string, int>, vector<pair<string, int>>, compare>&
-        heap) {
+vector<string> getHeapElements(Heap& heap) {
     vector<string> ans;
 
     while (!heap.empty()) {
@@ -144,7 +140,7 @@ int main() {
     map<string, int> freq_table;
     countWords(freq_table);
 
-    priority_queue<pair<string, int>, vector<pair<string, int>>, compare> heap;
+    Heap heap;
 
     initializeHeapWithKElements(heap, freq_table, sw, k);
 

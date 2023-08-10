@@ -1,3 +1,6 @@
+#ifndef HEAP_HPP
+#define HEAP_HPP
+
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -12,6 +15,10 @@ class Heap {
 
    public:
     int size();
+    bool empty();
     void push(pair<string, int> item);
-    void show();
+    pair<string, int> top();
+    void pop();
 };
+
+#endif
