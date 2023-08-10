@@ -49,5 +49,4 @@ void Heap::heapify_up(int index) {
         heapify_up(parent);
     }
 
-    return;
 }
