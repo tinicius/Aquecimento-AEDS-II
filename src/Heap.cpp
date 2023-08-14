@@ -24,12 +24,16 @@ void Heap::heapify_down(int index) {
 
     int smaller = index;
 
-    if (left < size() && this->array[left].second < this->array[index].second) {
+    int childLeft = this->array[left].second;
+    int childRight = this->array[right].second;
+
+    int indexFreq = this->array[index].second;
+
+    if (left < size() && childLeft < indexFreq) {
         smaller = left;
     }
 
-    if (right < size() &&
-        this->array[right].second < this->array[left].second) {
+    if (right < size() && childRight < childLeft) {
         smaller = right;
     }
 
@@ -44,9 +48,11 @@ void Heap::heapify_up(int index) {
 
     if (parent < 0) return;
 
-    if (parent != index && array[parent].second > array[index].second) {
+    int parentFreq = array[parent].second;
+    int indexFreq = array[index].second;
+
+    if (parent != index && parentFreq > indexFreq) {
         swap(array[parent], array[index]);
         heapify_up(parent);
     }
-
 }

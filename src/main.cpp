@@ -42,53 +42,56 @@ bool isValidChar(char c) {
     return iswalnum(c);
 }
 
-void loadStopWords(map<string, int>& sw) {
-    std::ifstream arq("../dataset/stopwords.data");
+void loadStopWords(unordered_map<string, int>& stopWordsTable) {
+    ifstream file("../dataset/stopwords.data");
 
-    if (!arq.is_open()) {
-        std::cerr << "Error opening arq" << std::endl;
+    if (!file.is_open()) {
+        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
         exit(1);
     }
 
     string line;
 
-    while (getline(arq, line)) {
-        sw[line]++;
+    while (getline(file, line)) {
+        stopWordsTable[line]++;
     }
 
-    arq.close();
+    file.close();
 }
 
-void countWords(map<string, int>& freq_table) {
-    FILE* file = fopen("../dataset/input.data", "r");
+void countWords(unordered_map<string, int>& freqWordsTable) {
+    ifstream file("../dataset/input.data");
 
-    if (file == 0) {
-        std::cerr << "Error opening arq" << std::endl;
+    if (!file.is_open()) {
+        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
         exit(1);
     }
 
     char aux;
     string word;
 
-    while (fscanf(file, "%c", &aux) > 0) {
+    while (file) {
+        file.get(aux);
+
         if (isValidChar(aux)) {
             word += tolower(aux);
         } else {
             if (aux == '-' || aux == '/' || aux == '_') continue;
 
             if (!word.empty() and isValidWord(word)) {
-                freq_table[word]++;
+                freqWordsTable[word]++;
             };
 
             word = "";
         }
     }
 
-    fclose(file);
+    file.close();
 }
 
-void initializeHeapWithKElements(Heap& heap, map<string, int>& freq_table,
-                                 map<string, int> sw, int k) {
+void initializeHeapWithKElements(Heap& heap,
+                                 unordered_map<string, int>& freq_table,
+                                 unordered_map<string, int> sw, int k) {
     int counter = 0;
 
     for (auto w : freq_table) {
@@ -101,8 +104,9 @@ void initializeHeapWithKElements(Heap& heap, map<string, int>& freq_table,
     }
 }
 
-void insertRemainingWordsInHeap(Heap& heap, map<string, int>& freq_table,
-                                map<string, int> sw) {
+void insertRemainingWordsInHeap(Heap& heap,
+                                unordered_map<string, int>& freq_table,
+                                unordered_map<string, int> sw) {
     for (auto w : freq_table) {
         auto menor = heap.top();
 
@@ -134,10 +138,10 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 int main() {
     int k = 20;
 
-    map<string, int> sw;
+    unordered_map<string, int> sw;
     loadStopWords(sw);
 
-    map<string, int> freq_table;
+    unordered_map<string, int> freq_table;
     countWords(freq_table);
 
     Heap heap;
@@ -148,9 +152,10 @@ int main() {
 
     vector<string> ans = getHeapElements(heap);
 
-    // showElementsInCorrectOrder(ans);
+    showElementsInCorrectOrder(ans);
 
-    for (int i = ans.size() - 1; i >= 0; i--) cout << ans[i] << " " << freq_table[ans[i]] << endl;
+    // for (int i = ans.size() - 1; i >= 0; i--)
+    //     cout << ans[i] << " " << freq_table[ans[i]] << endl;
 
     return 0;
 }
