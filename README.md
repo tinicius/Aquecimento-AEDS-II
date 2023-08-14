@@ -195,7 +195,7 @@ void Heap::heapify_down(int index) {
     int childLeft = this->array[left].second;
     int childRight = this->array[right].second;
 
-    int indexFreq = this->array[index].second
+    int indexFreq = this->array[index].second;
 
     if (left < size() && childLeft < indexFreq) {
         smaller = left;
