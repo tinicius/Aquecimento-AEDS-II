@@ -75,7 +75,7 @@ void countWords(unordered_map<string, int>& freqWordsTable) {
     string word;
 
     while (file) {
-				file.get(aux); // Lendo do arquivo
+	file.get(aux); // Lendo do arquivo
 
         if (isValidChar(aux)) { // Caracteres que podem fazer parte da palavra
             word += tolower(aux);
@@ -160,9 +160,9 @@ void Heap::heapify_up(int index) {
     int parent = (index - 1) / 2;
 
     if (parent < 0) return;
-		
-		int parentFreq = array[parent].second;
-		int indexFreq = array[index].second;
+
+    int parentFreq = array[parent].second;
+    int indexFreq = array[index].second;
 
     if (parent != index && parentFreq > indexFreq) {
         swap(array[parent], array[index]);
@@ -192,10 +192,10 @@ void Heap::heapify_down(int index) {
 
     int smaller = index;
 	
-		int childLeft = this->array[left].second;
-		int childRight = ;
+    int childLeft = this->array[left].second;
+    int childRight = this->array[right].second;
 
-		int indexFreq = this->array[index].second
+    int indexFreq = this->array[index].second
 
     if (left < size() && childLeft < indexFreq) {
         smaller = left;
