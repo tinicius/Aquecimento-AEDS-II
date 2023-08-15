@@ -123,16 +123,12 @@ void insertRemainingWordsInHeap(Heap& heap,
     }
 }
 
-vector<string> getHeapElements(Heap& heap) {
-    vector<string> ans;
-
+void getHeapElements(Heap& heap, vector<string>& ans) {
     while (!heap.empty()) {
         auto top = heap.top();
         ans.push_back(top.first);
         heap.pop();
     }
-
-    return ans;
 }
 
 void showElementsInCorrectOrder(vector<string>& ans) {
@@ -152,7 +148,8 @@ int main() {
 
     insertRemainingWordsInHeap(heap, freq_table, sw);
 
-    vector<string> ans = getHeapElements(heap);
+    vector<string> ans;
+    getHeapElements(heap, ans);
 
     showElementsInCorrectOrder(ans);
 
