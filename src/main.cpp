@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
@@ -8,6 +9,8 @@
 #include "Heap.hpp"
 
 using namespace std;
+
+#define K 20
 
 bool isValidWord(string s) {
     auto expAcents = {"--", "^", "-", " — ", " —", "—", "”", "“", "-”", "——"};
@@ -50,11 +53,11 @@ void loadStopWords(unordered_map<string, int>& stopWordsTable) {
     file.close();
 }
 
-void countWords(unordered_map<string, int>& freqWordsTable) {
-    ifstream file("../dataset/input.data");
+void readFile(string src, unordered_map<string, int>& freqWordsTable) {
+    ifstream file(src);
 
     if (!file.is_open()) {
-        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
+        cerr << "Erro ao abrir o arquivo: " << src << "!" << endl;
         exit(1);
     }
 
@@ -80,13 +83,23 @@ void countWords(unordered_map<string, int>& freqWordsTable) {
     file.close();
 }
 
+void realAllFilesInDatasetFolder(unordered_map<string, int>& freqWordsTable) {
+    for (auto& p : filesystem::directory_iterator("../dataset")) {
+        string path = p.path().string();
+
+        if (path == "../dataset/stopwords.data") continue;
+
+        readFile(path, freqWordsTable);
+    }
+}
+
 void initializeHeapWithKElements(Heap& heap,
                                  unordered_map<string, int>& freq_table,
-                                 unordered_map<string, int> sw, int k) {
+                                 unordered_map<string, int> sw, int items) {
     int counter = 0;
 
     for (auto w : freq_table) {
-        if (counter == k) break;
+        if (counter == items) break;
 
         if (sw[w.first] == 0) {
             heap.push(w);
@@ -127,26 +140,21 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
-    int k = 20;
-
     unordered_map<string, int> sw;
     loadStopWords(sw);
 
     unordered_map<string, int> freq_table;
-    countWords(freq_table);
+    realAllFilesInDatasetFolder(freq_table);
 
     Heap heap;
 
-    initializeHeapWithKElements(heap, freq_table, sw, k);
+    initializeHeapWithKElements(heap, freq_table, sw, K);
 
     insertRemainingWordsInHeap(heap, freq_table, sw);
 
     vector<string> ans = getHeapElements(heap);
 
     showElementsInCorrectOrder(ans);
-
-    // for (int i = ans.size() - 1; i >= 0; i--)
-    //     cout << ans[i] << " " << freq_table[ans[i]] << endl;
 
     return 0;
 }
