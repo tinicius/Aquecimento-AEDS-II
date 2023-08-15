@@ -6,6 +6,8 @@ Um exemplo clássico de problema que pode ser solucionado utilizando hash e heap
 
 Nesse trabalho iremos trabalhar com o unordered_map (da biblioteca padrão do C++) para hash e iremos, manualmente, implementar uma estrutura de heap, mais especificamente uma min-heap.
 
+**Observação:** Esse trabalho irá considerar todos os arquivos dentro da pasta *dataset* como entrada. Com excessão do arquivo "stopwords.data".
+
 ## Solução
 
 Inicialmente, criaremos uma tabela hash. Para isso, consideraremos cada palavra como uma chave e a frequência como o valor armazenado. Em cada colisão, o valor armazenado será incrementado.
