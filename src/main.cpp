@@ -83,7 +83,7 @@ void readFile(string src, unordered_map<string, int>& freqWordsTable) {
     file.close();
 }
 
-void realAllFilesInDatasetFolder(unordered_map<string, int>& freqWordsTable) {
+void readAllFilesInDatasetFolder(unordered_map<string, int>& freqWordsTable) {
     for (auto& p : filesystem::directory_iterator("../dataset")) {
         string path = p.path().string();
 
@@ -140,12 +140,11 @@ int main() {
     loadStopWords(sw);
 
     unordered_map<string, int> freq_table;
-    realAllFilesInDatasetFolder(freq_table);
+    readAllFilesInDatasetFolder(freq_table);
 
     Heap heap;
 
     initializeHeapWithKElements(heap, freq_table, sw, K);
-
     insertRemainingWordsInHeap(heap, freq_table, sw);
 
     vector<string> ans;
