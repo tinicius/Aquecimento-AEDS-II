@@ -1,22 +1,13 @@
-#include <stdio.h>
 #include <stdlib.h>
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <map>
-#include <queue>
+#include <unordered_map>
 #include <vector>
 
 #include "Heap.hpp"
 
 using namespace std;
-
-struct compare {
-    bool operator()(pair<string, int> a, pair<string, int> b) {
-        return a.second > b.second;
-    }
-};
 
 bool isValidWord(string s) {
     auto expAcents = {"--", "^", "-", " — ", " —", "—", "”", "“", "-”", "——"};

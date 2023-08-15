@@ -173,7 +173,5 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/iostream \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_tree.h \
  /usr/include/c++/11/bits/stl_map.h \
- /usr/include/c++/11/bits/stl_multimap.h /usr/include/c++/11/queue \
- /usr/include/c++/11/deque /usr/include/c++/11/bits/stl_deque.h \
- /usr/include/c++/11/bits/deque.tcc /usr/include/c++/11/bits/stl_queue.h \
+ /usr/include/c++/11/bits/stl_multimap.h \
  /home/vini/Documents/projects/trabalho-aquecimento/src/Heap.hpp
