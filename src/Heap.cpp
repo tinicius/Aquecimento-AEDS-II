@@ -12,6 +12,8 @@ void Heap::push(pair<string, int> item) {
 pair<string, int> Heap::top() { return this->array[0]; }
 
 void Heap::pop() {
+    if (this->array.size() == 0) return;
+
     this->array[0] = this->array.back();
     this->array.pop_back();
 
@@ -29,11 +31,11 @@ void Heap::heapify_down(int index) {
 
     int indexFreq = this->array[index].second;
 
-    if (left < size() && childLeft < indexFreq) {
+    if (left < this->size() && childLeft < indexFreq) {
         smaller = left;
     }
 
-    if (right < size() && childRight < childLeft) {
+    if (right < this->size() && childRight < childLeft) {
         smaller = right;
     }
 
