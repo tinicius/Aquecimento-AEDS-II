@@ -4,7 +4,7 @@
 
 Um exemplo clássico de problema que pode ser solucionado utilizando hash e heap é o "TOP k itens". Nesse problema, é necessário encontrar os k itens mais valiosos de uma coleção de dados. Utilizando um hash para contar a frequência de todos os itens, enquanto o heap é utilizado para manter uma lista dos k itens de maior valor
 
-Nesse trabalho iremos trabalhar com o map (da biblioteca padrão do C++) para hash e iremos, manualmente, implementar uma estrutura de heap, mais especificamente uma min-heap.
+Nesse trabalho iremos trabalhar com o unordered_map (da biblioteca padrão do C++) para hash e iremos, manualmente, implementar uma estrutura de heap, mais especificamente uma min-heap.
 
 ## Solução
 
@@ -80,7 +80,7 @@ void countWords(unordered_map<string, int>& freqWordsTable) {
         if (isValidChar(aux)) { // Caracteres que podem fazer parte da palavra
             word += tolower(aux);
         } else {
-						//Caracteres que são ignorados
+            //Caracteres que são ignorados
             if (aux == '-' || aux == '/' || aux == '_') continue;
 
             if (!word.empty()) {
