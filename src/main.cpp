@@ -77,7 +77,7 @@ void readFile(string src, Hash& freqWordsTable) {
 
             if (!word.empty() and isValidWord(word)) {
                 aa++;
-                cout << aa << endl;
+                // cout << aa << endl;
                 freqWordsTable.insert(word);
             };
 
@@ -95,6 +95,31 @@ void readAllFilesInDatasetFolder(Hash& freqWordsTable) {
         if (path == "./dataset/stopwords.data") continue;
 
         readFile(path, freqWordsTable);
+    }
+}
+
+void insertOnHeap(Heap& heap, Hash& freq_table, Hash& sw) {
+    int counter = 0;
+
+    for (auto w : freq_table.entries) {
+        if (counter < K) {
+            auto res = freq_table.at(w);
+            heap.push(res);
+
+            counter++;
+            continue;
+        }
+
+        auto menor = heap.top();
+
+        auto res = freq_table.at(w);
+
+        if (res.second > menor.second) {
+            heap.pop();
+            heap.push(res);
+        }
+
+        counter++;
     }
 }
 
@@ -125,10 +150,10 @@ void insertRemainingWordsInHeap(Heap& heap, Hash& freq_table, Hash& sw) {
     }
 }
 
-void getHeapElements(Heap& heap, vector<string>& ans) {
+void getHeapElements(Heap& heap, vector<pair<string, int>>& ans) {
     while (!heap.empty()) {
         auto top = heap.top();
-        ans.push_back(top.first);
+        ans.push_back(top);
         heap.pop();
     }
 }
@@ -150,17 +175,25 @@ int main() {
     Hash freq_table;
     readAllFilesInDatasetFolder(freq_table);
 
-    Heap heap;
+    // for (auto i : freq_table.entries) cout << i << " ";
 
-    initializeHeapWithKElements(heap, freq_table, sw, K);
-    insertRemainingWordsInHeap(heap, freq_table, sw);
+    Heap heap;
+    insertOnHeap(heap, freq_table, sw);
 
     heap.showHeapContainer();
 
-    vector<string> ans;
+    vector<pair<string, int>> ans;
     getHeapElements(heap, ans);
 
-    showElementsInCorrectOrder(ans);
+    cout << "Elementos em ordem crescente: \n";
+
+    for (int i = 0; i < ans.size(); i++) {
+        cout << ans[i].first << " " << ans[i].second << endl;
+    }
+
+    cout << endl;
+
+    // showElementsInCorrectOrder(ans);
 
     return 0;
 }

@@ -86,7 +86,6 @@ size_t Hash::hash(string key) {
 };
 
 void Hash::insert(string key) {
-
     // system("clear");
 
     if (this->array.size() >= RESERVE_VALUE) {
@@ -96,29 +95,31 @@ void Hash::insert(string key) {
     size_t index = this->hash(key);
 
     // dbg(index);
-
     // dbg(this->array[index].first);
 
-    while (
-        this->containerFill[index] != 0 ||
-        (this->containerFill[index] == 1 && this->array[index].first == key)) {
-        // cout << index<< " ";
+    while (this->containerFill[index] == 1) {
+        if (this->array[index].first == key) break;
+
         index += 1;
 
         if (index == RESERVE_VALUE) index = 0;
     }
 
+    // dbg(index);
+
     this->array[index].first = key;
     this->array[index].second++;
 
     this->containerFill[index] = 1;
-    entries.push_back(key);
+    entries.insert(key);
 }
 
 pair<string, int> Hash::at(string key) {
     size_t index = this->hash(key);
 
-    while (this->array[index].first != key) {
+    while (this->containerFill[index] == 1) {
+        if (this->array[index].first == key) break;
+
         index += 1;
 
         if (index == RESERVE_VALUE) index = 0;

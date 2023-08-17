@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ class Hash {
 
    public:
     vector<pair<string, int>> array;
-    vector<string> entries;
+    set<string> entries;
     Hash();
     virtual ~Hash();
     void insert(string key);
