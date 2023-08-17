@@ -150,7 +150,7 @@ int main() {
     Heap heap;
     insertOnHeap(heap, wordsTable, stopWordsTable);
 
-    heap.showHeapContainer();
+    heap.showHeapArray();
 
     vector<pair<string, int>> ans;
     getHeapElements(heap, ans);
