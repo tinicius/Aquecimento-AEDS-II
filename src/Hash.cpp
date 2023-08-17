@@ -2,7 +2,7 @@
 
 #define dbg(x) cout << #x << " = " << x << endl
 
-#define RESERVE_VALUE 10000
+#define RESERVE_VALUE 100000
 
 Hash::Hash() {
     this->array.reserve(RESERVE_VALUE);
@@ -85,28 +85,41 @@ size_t Hash::hash(string key) {
     return middle;
 };
 
-void Hash::insert(string key, int value) {
+void Hash::insert(string key) {
+
+    // system("clear");
+
     if (this->array.size() >= RESERVE_VALUE) {
         this->array.reserve(this->array.size() + RESERVE_VALUE);
     }
 
     size_t index = this->hash(key);
 
-    while (this->containerFill[index] != 0) {
-        index = this->hash(key) + 1;
+    // dbg(index);
+
+    // dbg(this->array[index].first);
+
+    while (
+        this->containerFill[index] != 0 ||
+        (this->containerFill[index] == 1 && this->array[index].first == key)) {
+        // cout << index<< " ";
+        index += 1;
 
         if (index == RESERVE_VALUE) index = 0;
     }
 
     this->array[index].first = key;
-    this->array[index].second = value;
+    this->array[index].second++;
+
+    this->containerFill[index] = 1;
+    entries.push_back(key);
 }
 
 pair<string, int> Hash::at(string key) {
     size_t index = this->hash(key);
 
     while (this->array[index].first != key) {
-        index = this->hash(key) + 1;
+        index += 1;
 
         if (index == RESERVE_VALUE) index = 0;
     }
