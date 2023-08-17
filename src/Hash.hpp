@@ -5,25 +5,21 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 
 class Hash {
    private:
-       vector<bool> containerFill;
-
-    // size_t hash(string key);
+    vector<pair<string, int>> array;
+    size_t hash(string key);
 
    public:
-    vector<pair<string, int>> array;
-    set<string> entries;
     Hash();
     virtual ~Hash();
+    vector<string> keys;
     void insert(string key);
+    bool find(string key);
     pair<string, int> at(string key);
-
-    size_t hash(string key);
 };
 
 #endif

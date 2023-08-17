@@ -65,8 +65,6 @@ void readFile(string src, Hash& freqWordsTable) {
     char aux;
     string word;
 
-    int aa = 0;
-
     while (file) {
         file.get(aux);
 
@@ -75,9 +73,7 @@ void readFile(string src, Hash& freqWordsTable) {
         } else {
             if (aux == '-' || aux == '/' || aux == '_') continue;
 
-            if (!word.empty() and isValidWord(word)) {
-                aa++;
-                // cout << aa << endl;
+            if (!word.empty() && isValidWord(word)) {
                 freqWordsTable.insert(word);
             };
 
@@ -98,12 +94,15 @@ void readAllFilesInDatasetFolder(Hash& freqWordsTable) {
     }
 }
 
-void insertOnHeap(Heap& heap, Hash& freq_table, Hash& sw) {
+void insertOnHeap(Heap& heap, Hash& wordsTable, Hash& stopWordsTable) {
     int counter = 0;
 
-    for (auto w : freq_table.entries) {
+    for (string word : wordsTable.keys) {
+
+        if(stopWordsTable.find(word)) continue;
+
         if (counter < K) {
-            auto res = freq_table.at(w);
+            auto res = wordsTable.at(word);
             heap.push(res);
 
             counter++;
@@ -112,7 +111,7 @@ void insertOnHeap(Heap& heap, Hash& freq_table, Hash& sw) {
 
         auto menor = heap.top();
 
-        auto res = freq_table.at(w);
+        auto res = wordsTable.at(word);
 
         if (res.second > menor.second) {
             heap.pop();
@@ -120,33 +119,6 @@ void insertOnHeap(Heap& heap, Hash& freq_table, Hash& sw) {
         }
 
         counter++;
-    }
-}
-
-void initializeHeapWithKElements(Heap& heap, Hash& freq_table, Hash& sw,
-                                 int items) {
-    int counter = 0;
-
-    for (auto w : freq_table.entries) {
-        if (counter == items) break;
-
-        auto res = freq_table.at(w);
-
-        heap.push(res);
-        counter++;
-    }
-}
-
-void insertRemainingWordsInHeap(Heap& heap, Hash& freq_table, Hash& sw) {
-    for (auto w : freq_table.entries) {
-        auto menor = heap.top();
-
-        auto res = freq_table.at(w);
-
-        if (res.second > menor.second) {
-            heap.pop();
-            heap.push(res);
-        }
     }
 }
 
@@ -169,16 +141,14 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
-    Hash sw;
-    loadStopWords(sw);
+    Hash stopWordsTable;
+    loadStopWords(stopWordsTable);
 
-    Hash freq_table;
-    readAllFilesInDatasetFolder(freq_table);
-
-    // for (auto i : freq_table.entries) cout << i << " ";
+    Hash wordsTable;
+    readAllFilesInDatasetFolder(wordsTable);
 
     Heap heap;
-    insertOnHeap(heap, freq_table, sw);
+    insertOnHeap(heap, wordsTable, stopWordsTable);
 
     heap.showHeapContainer();
 

@@ -4,10 +4,7 @@
 
 #define RESERVE_VALUE 100000
 
-Hash::Hash() {
-    this->array.reserve(RESERVE_VALUE);
-    this->containerFill.reserve(RESERVE_VALUE);
-}
+Hash::Hash() { this->array.reserve(RESERVE_VALUE); }
 
 Hash::~Hash() {
     // clear?
@@ -86,18 +83,13 @@ size_t Hash::hash(string key) {
 };
 
 void Hash::insert(string key) {
-    // system("clear");
-
     if (this->array.size() >= RESERVE_VALUE) {
         this->array.reserve(this->array.size() + RESERVE_VALUE);
     }
 
     size_t index = this->hash(key);
 
-    // dbg(index);
-    // dbg(this->array[index].first);
-
-    while (this->containerFill[index] == 1) {
+    while (this->array[index].second != 0) {
         if (this->array[index].first == key) break;
 
         index += 1;
@@ -105,19 +97,39 @@ void Hash::insert(string key) {
         if (index == RESERVE_VALUE) index = 0;
     }
 
-    // dbg(index);
+    auto& container = this->array[index];
 
-    this->array[index].first = key;
-    this->array[index].second++;
+    if (container.second == 0) {
+        container.first = key;
+        container.second = 1;
+        keys.push_back(key);
+    } else {
+        container.second++;
+    }
 
-    this->containerFill[index] = 1;
-    entries.insert(key);
+    double loadFactor = (double)keys.size() / (double)RESERVE_VALUE;
+    dbg(loadFactor);
+}
+
+bool Hash::find(string key) {
+    size_t index = this->hash(key);
+
+    while (this->array[index].second != 0) {
+        if (this->array[index].first == key) return true;
+
+        index += 1;
+
+        if (index == this->array.size()) index = 0;
+    }
+
+    return false;
+
 }
 
 pair<string, int> Hash::at(string key) {
     size_t index = this->hash(key);
 
-    while (this->containerFill[index] == 1) {
+    while (this->array[index].second != 0) {
         if (this->array[index].first == key) break;
 
         index += 1;
