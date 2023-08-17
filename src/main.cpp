@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Hash.hpp"
 #include "Heap.hpp"
 
 using namespace std;
@@ -142,6 +143,18 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
+    Hash h;
+
+    h.insert("a", 1);
+
+    pair<string, int> res;
+
+    res = h.at("a");
+
+    cout << res.first << " " << res.second << endl;
+
+    return 0;
+
     unordered_map<string, int> sw;
     loadStopWords(sw);
 

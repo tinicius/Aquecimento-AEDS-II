@@ -2,9 +2,12 @@
 
 #define dbg(x) cout << #x << " = " << x << endl
 
-#define RESERVE_VALUE 100000
+#define RESERVE_VALUE 10000
 
-Hash::Hash() { this->array.reserve(RESERVE_VALUE); }
+Hash::Hash() {
+    this->array.reserve(RESERVE_VALUE);
+    this->containerFill.reserve(RESERVE_VALUE);
+}
 
 Hash::~Hash() {
     // clear?
@@ -41,7 +44,8 @@ size_t getDigitsInSquare(size_t square) {
     return squareDigits;
 }
 
-size_t getSquareMiddle(size_t squareDigits, size_t digitsInArraySize, size_t square) {
+size_t getSquareMiddle(size_t squareDigits, size_t digitsInArraySize,
+                       size_t square) {
     size_t removeCount = 0;
 
     if (squareDigits > digitsInArraySize)
@@ -81,4 +85,31 @@ size_t Hash::hash(string key) {
     return middle;
 };
 
-void Hash::insert(string key, int value) {}
+void Hash::insert(string key, int value) {
+    if (this->array.size() >= RESERVE_VALUE) {
+        this->array.reserve(this->array.size() + RESERVE_VALUE);
+    }
+
+    size_t index = this->hash(key);
+
+    while (this->containerFill[index] != 0) {
+        index = this->hash(key) + 1;
+
+        if (index == RESERVE_VALUE) index = 0;
+    }
+
+    this->array[index].first = key;
+    this->array[index].second = value;
+}
+
+pair<string, int> Hash::at(string key) {
+    size_t index = this->hash(key);
+
+    while (this->array[index].first != key) {
+        index = this->hash(key) + 1;
+
+        if (index == RESERVE_VALUE) index = 0;
+    }
+
+    return this->array[index];
+}
