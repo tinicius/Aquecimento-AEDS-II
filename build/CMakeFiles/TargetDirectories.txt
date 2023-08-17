@@ -1,3 +1,0 @@
-/home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles/app.dir
-/home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles/edit_cache.dir
-/home/vini/Documents/projects/trabalho-aquecimento/build/CMakeFiles/rebuild_cache.dir

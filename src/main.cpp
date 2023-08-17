@@ -132,7 +132,13 @@ void getHeapElements(Heap& heap, vector<string>& ans) {
 }
 
 void showElementsInCorrectOrder(vector<string>& ans) {
-    for (int i = ans.size() - 1; i >= 0; i--) cout << ans[i] << endl;
+    cout << "Elementos em ordem crescente: \n";
+
+    for (int i = 0; i < ans.size(); i++) {
+        cout << ans[i] << "\t";
+    }
+
+    cout << endl;
 }
 
 int main() {
@@ -146,6 +152,8 @@ int main() {
 
     initializeHeapWithKElements(heap, freq_table, sw, K);
     insertRemainingWordsInHeap(heap, freq_table, sw);
+
+    heap.showHeapContainer();
 
     vector<string> ans;
     getHeapElements(heap, ans);

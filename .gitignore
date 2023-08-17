@@ -1,4 +1,4 @@
-### Build###
+### Build ###
 build
 
 .vscode
@@ -21,3 +21,7 @@ _deps
 *-prefix/
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake
+build/app
+build/CMakeFiles/CMakeOutput.log
+build/CMakeFiles/app.dir/src/main.cpp.o
+build/CMakeFiles/app

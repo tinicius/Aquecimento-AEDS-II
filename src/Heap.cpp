@@ -58,3 +58,12 @@ void Heap::heapify_up(int index) {
         heapify_up(parent);
     }
 }
+
+void Heap::showHeapContainer() {
+    cout << "Heap: \n";
+
+    for (int i = 0; i < this->array.size(); i++)
+        cout << this->array[i].first << "\t";
+
+    cout << endl;
+}

@@ -20,6 +20,7 @@ class Heap {
     void push(pair<string, int> item);
     pair<string, int> top();
     void pop();
+    void showHeapContainer();
 };
 
 #endif
