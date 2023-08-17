@@ -3,9 +3,11 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <unordered_map>
 #include <vector>
 
+#include "Hash.hpp"
 #include "Heap.hpp"
 
 using namespace std;
@@ -37,7 +39,7 @@ bool isValidChar(char c) {
 }
 
 void loadStopWords(unordered_map<string, int>& stopWordsTable) {
-    ifstream file("../dataset/stopwords.data");
+    ifstream file("../dataset/DomCasmurro.txt");
 
     if (!file.is_open()) {
         cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
@@ -142,8 +144,39 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
+    Hash h;
+
     unordered_map<string, int> sw;
     loadStopWords(sw);
+
+    set<size_t> colitions;
+
+    // int t = 40;
+
+    int col = 0;
+
+    for (auto& ws : sw) {
+        string w = ws.first;
+
+        size_t aux = h.hash(w);
+
+        // cout << aux << " ";
+
+        if (colitions.find(aux) != colitions.end()) {
+            // cout << "Colisao!\n";
+            // cout << w << endl << endl;
+
+            cout << aux << " ";
+            col++;
+        }
+
+        colitions.insert(aux);
+    }
+
+    cout << endl;
+    cout << col<< endl;
+
+    return 0;
 
     unordered_map<string, int> freq_table;
     readAllFilesInDatasetFolder(freq_table);
