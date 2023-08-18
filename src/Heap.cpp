@@ -63,7 +63,7 @@ void Heap::showHeapArray() {
     cout << "Heap: \n";
 
     for (size_t i = 0; i < this->array.size(); i++)
-        cout << this->array[i].first << "\t";
+        cout << this->array[i].first << " " << this->array[i].second << endl;
 
     cout << endl;
 }
