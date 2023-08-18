@@ -2,9 +2,10 @@
 
 #define dbg(x) cout << #x << " = " << x << endl
 
-#define RESERVE_VALUE 100000
-
-Hash::Hash() { this->array.reserve(RESERVE_VALUE); }
+Hash::Hash() {
+    this->bucketsNumber = 100;
+    this->array.resize(bucketsNumber);
+}
 
 Hash::~Hash() {
     // clear?
@@ -12,14 +13,12 @@ Hash::~Hash() {
 
 size_t sumDigits(string key) {
     size_t keySum = 0;
-    for (int i = 0; i < key.size(); i++) keySum += (size_t)key[i];
+    for (size_t i = 0; i < key.size(); i++) keySum += (size_t)key[i];
 
     return keySum;
 }
 
 size_t getDigitsInArraySize(size_t arraySize) {
-    if (arraySize == 0) arraySize = RESERVE_VALUE;
-
     size_t digitsInArraySize = 1;
 
     while (arraySize / 10 > 0) {
@@ -82,33 +81,59 @@ size_t Hash::hash(string key) {
     return middle;
 };
 
-void Hash::insert(string key) {
-    if (this->array.size() >= RESERVE_VALUE) {
-        this->array.reserve(this->array.size() + RESERVE_VALUE);
+void Hash::rehash() {
+    vector<pair<string, int>> actual;
+
+    for (auto& a : array) {
+        if (a.second != 0) actual.push_back(a);
     }
 
+    this->bucketsNumber *= 10;
+
+    this->array.resize(bucketsNumber);
+
+    for (auto& a : array) {
+        a.first = "";
+        a.second = 0;
+    }
+
+    keys.clear();
+
+    for (auto& k : actual) {
+        this->insert(k.first, k.second);
+    }
+}
+
+void Hash::insert(string key, int value) {
     size_t index = this->hash(key);
 
-    while (this->array[index].second != 0) {
-        if (this->array[index].first == key) break;
+    while (array[index].second != 0) {
+        if (array[index].first == key) break;
 
         index += 1;
 
-        if (index == RESERVE_VALUE) index = 0;
+        if (index == array.size()) index = 0;
     }
 
-    auto& container = this->array[index];
+    auto& container = array[index];
 
     if (container.second == 0) {
         container.first = key;
-        container.second = 1;
+        container.second = value;
         keys.push_back(key);
     } else {
         container.second++;
     }
 
-    double loadFactor = (double)keys.size() / (double)RESERVE_VALUE;
-    dbg(loadFactor);
+    // double loadFactor = (double)keys.size() / (double) array.size();
+    // dbg(loadFactor);
+
+    dbg(keys.size());
+
+    if (keys.size() == bucketsNumber) {
+        cout << "rehash" << endl;
+        this->rehash();
+    }
 }
 
 bool Hash::find(string key) {
@@ -123,7 +148,6 @@ bool Hash::find(string key) {
     }
 
     return false;
-
 }
 
 pair<string, int> Hash::at(string key) {
@@ -134,7 +158,7 @@ pair<string, int> Hash::at(string key) {
 
         index += 1;
 
-        if (index == RESERVE_VALUE) index = 0;
+        if (index == array.size()) index = 0;
     }
 
     return this->array[index];

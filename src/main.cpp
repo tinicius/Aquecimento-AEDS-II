@@ -48,7 +48,7 @@ void loadStopWords(Hash& stopWordsTable) {
     string line;
 
     while (getline(file, line)) {
-        stopWordsTable.insert(line);
+        stopWordsTable.insert(line, 1);
     }
 
     file.close();
@@ -74,7 +74,7 @@ void readFile(string src, Hash& freqWordsTable) {
             if (aux == '-' || aux == '/' || aux == '_') continue;
 
             if (!word.empty() && isValidWord(word)) {
-                freqWordsTable.insert(word);
+                freqWordsTable.insert(word, 1);
             };
 
             word = "";
