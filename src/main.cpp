@@ -37,7 +37,7 @@ bool isValidChar(char c) {
 }
 
 void loadStopWords(unordered_map<string, int>& stopWordsTable) {
-    ifstream file("../dataset/stopwords.data");
+    ifstream file("./dataset/stopwords.data");
 
     if (!file.is_open()) {
         cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
@@ -84,10 +84,10 @@ void readFile(string src, unordered_map<string, int>& freqWordsTable) {
 }
 
 void readAllFilesInDatasetFolder(unordered_map<string, int>& freqWordsTable) {
-    for (auto& p : filesystem::directory_iterator("../dataset")) {
+    for (auto& p : filesystem::directory_iterator("./dataset")) {
         string path = p.path().string();
 
-        if (path == "../dataset/stopwords.data") continue;
+        if (path == "./dataset/stopwords.data") continue;
 
         readFile(path, freqWordsTable);
     }
@@ -134,7 +134,7 @@ void getHeapElements(Heap& heap, vector<string>& ans) {
 void showElementsInCorrectOrder(vector<string>& ans) {
     cout << "Elementos em ordem crescente: \n";
 
-    for (int i = 0; i < ans.size(); i++) {
+    for (size_t i = 0; i < ans.size(); i++) {
         cout << ans[i] << "\t";
     }
 
@@ -158,7 +158,13 @@ int main() {
     vector<string> ans;
     getHeapElements(heap, ans);
 
-    showElementsInCorrectOrder(ans);
+    cout << "Elementos em ordem crescente: \n";
+
+    for (size_t i = 0; i < ans.size(); i++) {
+        cout << ans[i] << " " << freq_table[ans[i]] << endl;
+    }
+
+    cout << endl;
 
     return 0;
 }
