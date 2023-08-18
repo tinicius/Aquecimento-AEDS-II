@@ -129,7 +129,7 @@ void Hash::insert(string key, int value) {
     // dbg(loadFactor);
 
     if (loadFactor >= 0.5) {
-        cout << "rehash" << endl;
+        // cout << "rehash" << endl;
         this->rehash();
     }
 
