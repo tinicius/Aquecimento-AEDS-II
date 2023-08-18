@@ -88,7 +88,7 @@ void Hash::rehash() {
         if (a.second != 0) actual.push_back(a);
     }
 
-    this->bucketsNumber *= 10;
+    this->bucketsNumber *= 100;
 
     this->array.resize(bucketsNumber);
 
@@ -125,15 +125,20 @@ void Hash::insert(string key, int value) {
         container.second++;
     }
 
-    // double loadFactor = (double)keys.size() / (double) array.size();
+    double loadFactor = (double)keys.size() / (double)array.size();
     // dbg(loadFactor);
 
-    dbg(keys.size());
-
-    if (keys.size() == bucketsNumber) {
+    if (loadFactor >= 0.5) {
         cout << "rehash" << endl;
         this->rehash();
     }
+
+    // dbg(keys.size());
+
+    // if (keys.size() == bucketsNumber) {
+    //     cout << "rehash" << endl;
+    //     this->rehash();
+    // }
 }
 
 bool Hash::find(string key) {
