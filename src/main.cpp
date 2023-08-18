@@ -153,7 +153,7 @@ int main() {
     initializeHeapWithKElements(heap, freq_table, sw, K);
     insertRemainingWordsInHeap(heap, freq_table, sw);
 
-    heap.showHeapContainer();
+    heap.showHeapArray();
 
     vector<string> ans;
     getHeapElements(heap, ans);

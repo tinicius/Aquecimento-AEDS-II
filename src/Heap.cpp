@@ -59,7 +59,7 @@ void Heap::heapify_up(int index) {
     }
 }
 
-void Heap::showHeapContainer() {
+void Heap::showHeapArray() {
     cout << "Heap: \n";
 
     for (size_t i = 0; i < this->array.size(); i++)
