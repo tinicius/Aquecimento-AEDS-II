@@ -126,19 +126,38 @@ void Hash::insert(string key, int value) {
     }
 
     double loadFactor = (double)keys.size() / (double)array.size();
-    // dbg(loadFactor);
 
     if (loadFactor >= 0.5) {
-        // cout << "rehash" << endl;
         this->rehash();
     }
+}
 
-    // dbg(keys.size());
+void Hash::insert(string key) {
+    size_t index = this->hash(key);
 
-    // if (keys.size() == bucketsNumber) {
-    //     cout << "rehash" << endl;
-    //     this->rehash();
-    // }
+    while (array[index].second != 0) {
+        if (array[index].first == key) break;
+
+        index += 1;
+
+        if (index == array.size()) index = 0;
+    }
+
+    auto& container = array[index];
+
+    if (container.second == 0) {
+        container.first = key;
+        container.second = 1;
+        keys.push_back(key);
+    } else {
+        container.second++;
+    }
+
+    double loadFactor = (double)keys.size() / (double)array.size();
+
+    if (loadFactor >= 0.5) {
+        this->rehash();
+    }
 }
 
 bool Hash::find(string key) {

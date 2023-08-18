@@ -19,6 +19,7 @@ class Hash {
     Hash();
     virtual ~Hash();
     vector<string> keys;
+    void insert(string key);
     void insert(string key, int value);
     bool find(string key);
     pair<string, int> at(string key);

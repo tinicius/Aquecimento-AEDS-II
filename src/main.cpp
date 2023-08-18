@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 
 #include <filesystem>
 #include <fstream>
@@ -6,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Hash.hpp"
 #include "Heap.hpp"
 
 using namespace std;
@@ -34,6 +36,23 @@ bool isValidChar(char c) {
     if (acents.find(c) != acents.npos) return true;
 
     return iswalnum(c);
+}
+
+void loadStopWords(Hash& stopWordsTable) {
+    ifstream file("./dataset/stopwords.data");
+
+    if (!file.is_open()) {
+        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
+        exit(1);
+    }
+
+    string line;
+
+    while (getline(file, line)) {
+        stopWordsTable.insert(line);
+    }
+
+    file.close();
 }
 
 void loadStopWords(unordered_map<string, int>& stopWordsTable) {
@@ -93,32 +112,90 @@ void readAllFilesInDatasetFolder(unordered_map<string, int>& freqWordsTable) {
     }
 }
 
-void initializeHeapWithKElements(Heap& heap,
-                                 unordered_map<string, int>& freq_table,
-                                 unordered_map<string, int> sw, int items) {
+void readFile(string src, Hash& freqWordsTable) {
+    ifstream file(src);
+
+    if (!file.is_open()) {
+        cerr << "Erro ao abrir o arquivo: " << src << "!" << endl;
+        exit(1);
+    }
+
+    char aux;
+    string word;
+
+    while (file) {
+        file.get(aux);
+
+        if (isValidChar(aux)) {
+            word += tolower(aux);
+        } else {
+            if (aux == '-' || aux == '/' || aux == '_') continue;
+
+            if (!word.empty() and isValidWord(word)) {
+                freqWordsTable.insert(word);
+            };
+
+            word = "";
+        }
+    }
+
+    file.close();
+}
+
+void readAllFilesInDatasetFolder(Hash& freqWordsTable) {
+    for (auto& p : filesystem::directory_iterator("./dataset")) {
+        string path = p.path().string();
+
+        if (path == "./dataset/stopwords.data") continue;
+
+        readFile(path, freqWordsTable);
+    }
+}
+
+void insertElementsOnHeap(Heap& heap, unordered_map<string, int>& freq_table,
+                          unordered_map<string, int>& stopWordsMap) {
     int counter = 0;
 
     for (auto w : freq_table) {
-        if (counter == items) break;
+        if (stopWordsMap[w.first] > 0) continue;
 
-        if (sw[w.first] == 0) {
+        if (counter < K) {
+            heap.push(w);
+            counter++;
+            continue;
+        }
+
+        auto menor = heap.top();
+
+        if (w.second > menor.second) {
+            heap.pop();
             heap.push(w);
             counter++;
         }
     }
 }
 
-void insertRemainingWordsInHeap(Heap& heap,
-                                unordered_map<string, int>& freq_table,
-                                unordered_map<string, int> sw) {
-    for (auto w : freq_table) {
+void insertElementsOnHeap(Heap& heap, Hash& freq_table, Hash& stopWordsMap) {
+    int counter = 0;
+
+    for (string w : freq_table.keys) {
+        if (stopWordsMap.at(w).second > 0) continue;
+
+        pair<string, int> res = freq_table.at(w);
+
+        if (counter < K) {
+            // cout << res.first << " " << res.second << endl;
+            heap.push(res);
+            counter++;
+            continue;
+        }
+
         auto menor = heap.top();
 
-        if (w.second > menor.second) {
-            if (sw[w.first] == 0) {
-                heap.pop();
-                heap.push(w);
-            }
+        if (res.second > menor.second) {
+            heap.pop();
+            heap.push(res);
+            counter++;
         }
     }
 }
@@ -142,6 +219,12 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
+    // unordered_map implemantion
+
+    clock_t startExe, endExe;
+    double execution_time;
+    startExe = clock();
+
     unordered_map<string, int> sw;
     loadStopWords(sw);
 
@@ -149,22 +232,49 @@ int main() {
     readAllFilesInDatasetFolder(freq_table);
 
     Heap heap;
-
-    initializeHeapWithKElements(heap, freq_table, sw, K);
-    insertRemainingWordsInHeap(heap, freq_table, sw);
+    insertElementsOnHeap(heap, freq_table, sw);
 
     heap.showHeapArray();
 
-    vector<string> ans;
-    getHeapElements(heap, ans);
+    //
 
-    cout << "Elementos em ordem crescente: \n";
+    endExe = clock();
+    execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    for (size_t i = 0; i < ans.size(); i++) {
-        cout << ans[i] << " " << freq_table[ans[i]] << endl;
-    }
+    printf("Time taken to execute in seconds : %f\n", execution_time);
 
-    cout << endl;
+    // vector<string> ans;
+    // getHeapElements(heap, ans);
+
+    // cout << "Elementos em ordem crescente: \n";
+
+    // for (size_t i = 0; i < ans.size(); i++) {
+    //     cout << ans[i] << " " << freq_table[ans[i]] << endl;
+    // }
+
+    // cout << endl;
+
+    // Hash Middle square
+
+    startExe = clock();
+
+    Hash stopWordsHash;
+    loadStopWords(stopWordsHash);
+
+    Hash wordsFreq;
+    readAllFilesInDatasetFolder(wordsFreq);
+
+    Heap h;
+    insertElementsOnHeap(h, wordsFreq, stopWordsHash);
+
+    h.showHeapArray();
+
+    //
+
+    endExe = clock();
+    execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
+
+    printf("Time taken to execute in seconds : %f\n", execution_time);
 
     return 0;
 }
