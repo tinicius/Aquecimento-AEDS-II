@@ -133,7 +133,7 @@ void getHeapElements(Heap& heap, vector<pair<string, int>>& ans) {
 void showElementsInCorrectOrder(vector<string>& ans) {
     cout << "Elementos em ordem crescente: \n";
 
-    for (int i = 0; i < ans.size(); i++) {
+    for (size_t i = 0; i < ans.size(); i++) {
         cout << ans[i] << "\n";
     }
 
@@ -157,7 +157,7 @@ int main() {
 
     cout << "Elementos em ordem crescente: \n";
 
-    for (int i = 0; i < ans.size(); i++) {
+    for (size_t i = 0; i < ans.size(); i++) {
         cout << ans[i].first << " " << ans[i].second << endl;
     }
 
