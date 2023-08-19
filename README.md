@@ -320,7 +320,7 @@ Foi também possível compreender melhor as estruras de heap e hash. Para realiz
 
 Por fim, foi possível comparar duas implementações de hash. Tivemos como resultado que mesmo um método de hash simples pode ser muito eficiente e até mesmo comparavel com as implementações usadas na bibliotaca padrão.
 
-# COMPILAÇÃO E EXECUÇÃO
+## COMPILAÇÃO E EXECUÇÃO
 
 A algorítmo disponibilizado possui um arquivo Makefile que realiza todo o procedimento de compilação e execução. Para tanto, temos as seguintes diretrizes de execução:
 
