@@ -307,3 +307,15 @@ Entrada 3: "DomCasmurro.txt" + "Semana_Machado_Assis.txt"
 | Entrada 1 | 0,075500      | 0,134379           |
 | Entrada 2 | 0,272346      | 0,374359           |
 | Entrada 3 | 0,322327      | 0,472777           |
+
+Os resultados mostram uma melhor performace utilizando o unordered_map. Entretanto essa diferença é bem menor que o esperado visto que o método "meio do quadrado" é uma função de hash muito simples, quando comparada a outros métodos.
+
+Além disso a implementação da biblioteca utiliza várias otimizações que não foram igualmente aplicar a hash feita no trabalho. Um exemplo são operações bitwise, que melhoram o custo ao realizar manipulações com a chave.
+
+## Conclusão
+
+Nessa trabalho conseguimos analisar a eficiencia de estruturas para resolução de problemas. Conseguindo extrair as palavras mais frequentes, de textos relativamente grandes, em questão de segundos. Nessa situação ao se optar por métodos quadráticos ou até mesmo a métodos de ordenação, teriámos um tempo muito pior. Podendo o programa até mesmo não terminar sua execução em um tempo hábil.
+
+Foi também possível compreender melhor as estruras de heap e hash. Para realizar o trabalho foram feitas várias pesquisas sobre o funcionamento desses algoritmos. E a opção de implementar, ao invés de buscar soluções prontas, contribuiu ainda mais para o entendimento
+
+Por fim, foi possível comparar duas implementações de hash. Tivemos como resultado que mesmo um método de hash simples pode ser muito eficiente e até mesmo comparavel com as implementações usadas na bibliotaca padrão.
