@@ -5,6 +5,7 @@ int Heap::size() { return this->array.size(); }
 bool Heap::empty() { return this->size() == 0; }
 
 void Heap::push(pair<string, int> item) {
+    // cout << item.first << " " << item.second << endl;
     this->array.push_back(item);
     this->heapify_up(size() - 1);
 }
@@ -60,7 +61,7 @@ void Heap::heapify_up(int index) {
 }
 
 void Heap::showHeapArray() {
-    cout << "Heap: \n";
+    cout << "Elementos na Heap: \n";
 
     for (size_t i = 0; i < this->array.size(); i++)
         cout << this->array[i].first << " " << this->array[i].second << endl;

@@ -219,7 +219,7 @@ void showElementsInCorrectOrder(vector<string>& ans) {
 }
 
 int main() {
-    // unordered_map implemantion
+    // unordered_map implemantation
 
     clock_t startExe, endExe;
     double execution_time;
@@ -234,25 +234,23 @@ int main() {
     Heap heap;
     insertElementsOnHeap(heap, freq_table, sw);
 
+    cout << endl << "unordered_map" << endl << endl;
+
     heap.showHeapArray();
+
+    cout << "Elemetos ordenados:" << endl;
+
+    while (!heap.empty()) {
+        cout << heap.top().first << " " << heap.top().second << endl;
+        heap.pop();
+    }
 
     //
 
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("Time taken to execute in seconds : %f\n", execution_time);
-
-    // vector<string> ans;
-    // getHeapElements(heap, ans);
-
-    // cout << "Elementos em ordem crescente: \n";
-
-    // for (size_t i = 0; i < ans.size(); i++) {
-    //     cout << ans[i] << " " << freq_table[ans[i]] << endl;
-    // }
-
-    // cout << endl;
+    printf("\nTime taken to execute in seconds : %f\n", execution_time);
 
     // Hash Middle square
 
@@ -264,17 +262,28 @@ int main() {
     Hash wordsFreq;
     readAllFilesInDatasetFolder(wordsFreq);
 
+    cout << endl << "---------------" << endl;
+
     Heap h;
     insertElementsOnHeap(h, wordsFreq, stopWordsHash);
 
+    cout << endl << "Meio dos quadrados" << endl << endl;
+
     h.showHeapArray();
+
+    cout << "Elemetos ordenados:" << endl;
+
+    while (!h.empty()) {
+        cout << h.top().first << " " << h.top().second << endl;
+        h.pop();
+    }
 
     //
 
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("Time taken to execute in seconds : %f\n", execution_time);
+    printf("\nTime taken to execute in seconds : %f\n", execution_time);
 
     return 0;
 }

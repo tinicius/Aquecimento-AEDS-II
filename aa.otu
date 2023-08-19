@@ -1,0 +1,99 @@
+././build/app
+
+unordered_map
+
+Elementos na Heap: 
+menos 408
+tão 426
+nada 452
+dia 475
+dias 443
+agora 476
+outro 582
+vez 500
+todos 526
+bem 451
+grande 472
+aqui 507
+pode 604
+assim 610
+outros 495
+tudo 750
+outra 575
+ainda 768
+homem 537
+tempo 494
+
+Elemetos ordenados:
+menos 408
+tão 426
+dias 443
+bem 451
+nada 452
+grande 472
+dia 475
+agora 476
+tempo 494
+vez 500
+aqui 507
+outros 495
+todos 526
+homem 537
+outra 575
+outro 582
+pode 604
+assim 610
+tudo 750
+ainda 768
+
+Time taken to execute in seconds : 0.407632
+
+---------------
+
+Meio dos quadrados
+
+Elementos na Heap: 
+menos 408
+bem 451
+tão 426
+nada 452
+tempo 494
+grande 472
+dias 443
+agora 476
+aqui 507
+outros 495
+outra 575
+vez 500
+dia 475
+tudo 750
+outro 582
+todos 526
+assim 610
+ainda 768
+homem 537
+pode 604
+
+Elemetos ordenados:
+menos 408
+tão 426
+dias 443
+bem 451
+nada 452
+grande 472
+dia 475
+agora 476
+tempo 494
+outros 495
+vez 500
+aqui 507
+todos 526
+homem 537
+outra 575
+outro 582
+pode 604
+assim 610
+tudo 750
+ainda 768
+
+Time taken to execute in seconds : 0.542150
