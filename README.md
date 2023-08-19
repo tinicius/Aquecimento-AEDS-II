@@ -4,7 +4,9 @@
 
 Um exemplo clássico de problema que pode ser solucionado utilizando hash e heap é o "TOP k itens". Nesse problema, é necessário encontrar os k itens mais valiosos de uma coleção de dados. Utilizando um hash para contar a frequência de todos os itens, enquanto o heap é utilizado para manter uma lista dos k itens de maior valor
 
-Nesse trabalho iremos trabalhar com o unordered_map (da biblioteca padrão do C++) para hash e iremos, manualmente, implementar uma estrutura de heap, mais especificamente uma min-heap.
+Este trabalho tem com objetivo implementar uma estrutura de min-heap, implementar uma estrutura de hash e, por fim, comparar a hash desenvolvida com a implementação de hash disponínel na biblioteca do C++.
+
+Palavras-chave: heap, min-heap, hash, unorderep_map, meio dos quadrados.
 
 **Observação:** Esse trabalho irá considerar todos os arquivos dentro da pasta *dataset* como entrada. Com excessão do arquivo "stopwords.data".
 
@@ -35,67 +37,15 @@ Simplificando, a complexidade do algoritmo pode ser descrita como O(n * log k).
 
 ## Implementação
 
-### Lendo o arquivo
+### Lendo os arquivos
 
 Durante o programa são realizadas duas leituras, uma para buscar o texto de entrada e outra para as stopwords, ambas usando a bliblioteca fstream do C++.
 
 As stopwords estão em um arquivo formatado de uma maneira especifica tendo cada palavra em uma linha. Assim, em nosso código é feita a leitura linha por linha e aplicando a palavra em umas das estruturas de hash.
 
-```cpp
-void loadStopWords(unordered_map<string, int>& stopWordsTable) {
-    ifstream file("../dataset/stopwords.data");
-
-    if (!file.is_open()) {
-        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
-        exit(1);
-    }
-
-    string line;
-
-    while (getline(file, line)) {
-        stopWordsTable[line]++;
-    }
-
-    file.close();
-}
-```
-
-O texto de entrada, por ser um texto comum, é lido de caracter em caracter, a fim de ir fazendo as validações e categorizações necessárias. Caso o char da iteração seja válido, ou seja pode aparecer em uma palavra, ele é concatenado a palavra. 
+Já o texto de entrada, por ser um texto comum, é lido de caracter em caracter, a fim de ir fazendo as validações e categorizações necessárias. Caso o char da iteração seja válido, ou seja pode aparecer em uma palavra, ele é concatenado a palavra. 
 
 Existem alguns caracteres especiais que são ignorados. Por exemplo na palavra “faça-se” o caracter “-” é ignorado e a palavra é contabilizada como “façase”.
-
-```cpp
-void countWords(unordered_map<string, int>& freqWordsTable) {
-    ifstream file("../dataset/input.data");
-
-    if (!file.is_open()) {
-        cerr << "Erro ao abrir um dos arquivos de entrada!" << std::endl;
-        exit(1);
-    }
-
-    char aux;
-    string word;
-
-    while (file) {
-	file.get(aux); // Lendo do arquivo
-
-        if (isValidChar(aux)) { // Caracteres que podem fazer parte da palavra
-            word += tolower(aux);
-        } else {
-            //Caracteres que são ignorados
-            if (aux == '-' || aux == '/' || aux == '_') continue;
-
-            if (!word.empty()) {
-                freqWordsTable[word]++; // Inserindo a palavra na hash
-            };
-
-            word = ""; // Limpando a variável auxiliar
-        }
-    }
-
-    file.close();
-}
-```
 
 ### Hash
 
