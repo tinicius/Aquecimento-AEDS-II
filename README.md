@@ -319,3 +319,13 @@ Nessa trabalho conseguimos analisar a eficiencia de estruturas para resolução 
 Foi também possível compreender melhor as estruras de heap e hash. Para realizar o trabalho foram feitas várias pesquisas sobre o funcionamento desses algoritmos. E a opção de implementar, ao invés de buscar soluções prontas, contribuiu ainda mais para o entendimento
 
 Por fim, foi possível comparar duas implementações de hash. Tivemos como resultado que mesmo um método de hash simples pode ser muito eficiente e até mesmo comparavel com as implementações usadas na bibliotaca padrão.
+
+# COMPILAÇÃO E EXECUÇÃO
+
+A algorítmo disponibilizado possui um arquivo Makefile que realiza todo o procedimento de compilação e execução. Para tanto, temos as seguintes diretrizes de execução:
+
+| Comando                |  Função                                                                                           |                     
+| -----------------------| ------------------------------------------------------------------------------------------------- |
+|  `make clean`          | Apaga a última compilação realizada contida na pasta build                                        |
+|  `make`                | Executa a compilação do programa utilizando o gcc, e o resultado vai para a pasta build           |
+|  `make run`            | Executa o programa da pasta build após a realização da compilação                                 |
