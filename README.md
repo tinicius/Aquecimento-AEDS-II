@@ -2,7 +2,7 @@
 
 ## Introdução
 
-No problema conhecido como "Top K Itens" o objetivo é desenvolver um algoritmo que possa listar as palavras mais valiosas em um texto, por exemplo, escolhendo as mais ou menos frequentes. Utilizando das estruturas hash e heap é possível desenvolver uma solução com com custo computacional O(n log k), onde n é número total de palavras e k é a quantidade palavras escolhidas.
+No problema conhecido como "Top K Itens" o objetivo é desenvolver um algoritmo que possa listar as palavras mais valiosas em um texto, por exemplo, escolhendo as mais ou menos frequentes. Utilizando das estruturas hash e heap é possível desenvolver uma solução com com custo computacional $O(n \cdot \log k)$, onde n é número total de palavras e k é a quantidade palavras escolhidas.
 
 Esse trabalho tem como objetivo principal desenvolver um algoritmo que consiga listar os K termos mais frequentes em uma coleção de arquivos de texto. Além disso, também serão implementadas estruturas de hash e de heap. E por enfim, comparar a função de hashing "Meio dos quadrados" com a estrutura unordered_map.
 
@@ -20,7 +20,7 @@ As estruturas de hash são uma alternativa interresante nessa etapa devido à su
 
 Em seguida, implementaremos uma min-heap. Isso facilitará a remoção de valores, já que sempre removeremos o menor valor, a fim de manter os maiores valores dentro da estrutura.
 
-As estruturas de heap, sejam min ou max, tem complexidade logarítmica no número de itens armazenados para cada inserção e um custo constante para recuperar ou retirar o topo. No pior caso da nossa solução, onde sempre será necessário remover uma palavra e inserir outra teremos complexidade O(n * log k).
+As estruturas de heap, sejam min ou max, tem complexidade logarítmica no número de itens armazenados para cada inserção e um custo constante para recuperar ou retirar o topo. No pior caso da nossa solução, onde sempre será necessário remover uma palavra e inserir outra teremos complexidade $O(n \cdot \log k)$.
 
 Nessa situação esse pior caso seria testar as palavras em ordem crescente, da menos comum até a mais que aparece nos texto.
 
@@ -28,7 +28,7 @@ Os primeiros K elementos da tabela hash serão inseridos na heap. Em seguida, pa
 
 É possível que perceber que caso um valor não seja maior que topo da min-heap ele consequentemente não será maior que nenhum outro elemento. Isso garante que nossa heap sempre terá os maiores elementos e pra isso é necessário fazer comparações apenas como o menor elemento.
 
-Para recuperar os K termos em ordem crescente de aparição, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade O(k).
+Para recuperar os K termos em ordem crescente de aparição, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade $O(k)$.
 
 Portanto, a complexidade total da solução pode ser descrita como
 
