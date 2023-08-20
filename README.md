@@ -2,9 +2,9 @@
 
 ## Introdução
 
-Um exemplo clássico de problema que pode ser solucionado utilizando hash e heap é o "TOP k itens". Nesse problema, é necessário encontrar os k itens mais valiosos de uma coleção de dados. Utilizando um hash para contar a frequência de todos os itens, enquanto o heap é utilizado para manter uma lista dos k itens de maior valor
+No problema conhecido como "Top K Itens" o objetivo é desenvolver um algoritmo que possa listar as palavras mais valirosas em um texto, por exemplo, escolhendo as mais ou menos frequentes. Utilizando das estruturas hash e heap é possível desenvolver uma solução com com custo computacional O(n log k), onde n é número total de palavras e k é a quantidade palavras escolhidas.
 
-Este trabalho tem com objetivo implementar uma estrutura de min-heap, implementar uma estrutura de hash e, por fim, comparar a hash desenvolvida com a implementação de hash disponínel na biblioteca do C++.
+Esse trabalho tem como objetivo principal desenvolver um algoritmo que consiga listar os K termos mais frenquentes em uma coleção de arquivos de texto. Além disso, também serão implementadas estruturas de hash e de heap. E por enfim, comparar a função de hashing "Meio dos quadrados" com a estrutura unordered_map.
 
 Palavras-chave: heap, min-heap, hash, unorderep_map, meio dos quadrados.
 
