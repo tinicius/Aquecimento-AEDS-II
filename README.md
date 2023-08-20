@@ -2,13 +2,13 @@
 
 ## Introdução
 
-No problema conhecido como "Top K Itens" o objetivo é desenvolver um algoritmo que possa listar as palavras mais valirosas em um texto, por exemplo, escolhendo as mais ou menos frequentes. Utilizando das estruturas hash e heap é possível desenvolver uma solução com com custo computacional O(n log k), onde n é número total de palavras e k é a quantidade palavras escolhidas.
+No problema conhecido como "Top K Itens" o objetivo é desenvolver um algoritmo que possa listar as palavras mais valiosas em um texto, por exemplo, escolhendo as mais ou menos frequentes. Utilizando das estruturas hash e heap é possível desenvolver uma solução com com custo computacional O(n log k), onde n é número total de palavras e k é a quantidade palavras escolhidas.
 
-Esse trabalho tem como objetivo principal desenvolver um algoritmo que consiga listar os K termos mais frenquentes em uma coleção de arquivos de texto. Além disso, também serão implementadas estruturas de hash e de heap. E por enfim, comparar a função de hashing "Meio dos quadrados" com a estrutura unordered_map.
+Esse trabalho tem como objetivo principal desenvolver um algoritmo que consiga listar os K termos mais frequentes em uma coleção de arquivos de texto. Além disso, também serão implementadas estruturas de hash e de heap. E por enfim, comparar a função de hashing "Meio dos quadrados" com a estrutura unordered_map.
 
-Palavras-chave: heap, min-heap, hash, unorderep_map, meio dos quadrados.
+**Palavras-chave:** heap, min-heap, hash, unorderep_map, meio dos quadrados.
 
-**Observação:** Esse trabalho irá considerar todos os arquivos dentro da pasta *dataset* como entrada. Com excessão do arquivo "stopwords.data".
+**Observação:** O programa irá considerar todos os arquivos dentro da pasta dataset como entrada, independente do nome. Com excessão do arquivo "stopwords.data", que contém termos que serem ignorados na listagem, esse arquivo não deve ser seu nome alterado.
 
 ## Solução 
 
