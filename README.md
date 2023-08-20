@@ -12,19 +12,23 @@ Esse trabalho tem como objetivo principal desenvolver um algoritmo que consiga l
 
 ## Solução 
 
-Inicialmente, criaremos uma tabela hash. Para isso, consideraremos cada palavra como uma chave e a frequência como o valor armazenado. Em cada colisão, o valor armazenado será incrementado.
+Inicialmente buscamos todos os termos dentro do arquivo de stopwords. Estes serão ignorados durante a contagem, não aparecendo na listagem final.
 
-Em seguida, percorreremos todo o texto, extraindo cada palavra e aplicando-a em nossa tabela hash. Ao final desse processo, teremos a frequência de todas as palavras do texto. Nessa etapa, é importante tratar o texto considerando acentuações e caracteres maiúsculos e minúsculos.
+Após essa etapa são extraídas as palavras dos arquivos de entrada. Cada dessas, que não for uma *stopword*, é inserida na estrutura de hash. Sendo a palavra a chave e a sua frequencia o valor, este é incrementado a cada ocorrencia. Ao fim desse processo temos uma lista com todas as palavras e a quantidade de aparicoes no texto.
 
-A tabela hash será uma boa alternativa nessa etapa, devido à sua complexidade aproximadamente constante.
+As estruturas de hash são uma alternativa interresante nessa etapa devido à sua complexidade constante.
 
-Para a heap, implementaremos uma min-heap. Isso facilitará a remoção de valores, já que sempre removeremos o menor valor, a fim de manter os maiores valores dentro da estrutura.
+Em seguida, implementaremos uma min-heap. Isso facilitará a remoção de valores, já que sempre removeremos o menor valor, a fim de manter os maiores valores dentro da estrutura.
 
-A estrutura de heap tem complexidade logarítmica no número de itens armazenados para cada inserção e um custo constante para recuperar o topo. No pior caso da nossa solução, onde sempre será necessário inserir a palavra na heap, teremos complexidade O(n * log k).
+As estruturas de heap, sejam min ou max, tem complexidade logarítmica no número de itens armazenados para cada inserção e um custo constante para recuperar ou retirar o topo. No pior caso da nossa solução, onde sempre será necessário remover uma palavra e inserir outra teremos complexidade O(n * log k).
 
-Os primeiros K elementos da tabela hash serão inseridos na heap. Em seguida, percorreremos o restante dos elementos e verificaremos se seu valor é maior que o menor valor dentro da heap. Se isso acontecer, o item da heap será removido e o item da iteração será inserido.
+Nessa situação esse pior caso seria testar as palavras em ordem crescente, da menos comum até a mais que aparece nos texto.
 
-Para recuperar os elementos, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade O(k).
+Os primeiros K elementos da tabela hash serão inseridos na heap. Em seguida, para o restante dos elementos é verificado se seu valor é maior que o menor valor dentro da heap. Se isso acontecer, o item da heap será removido e o item da iteração será inserido.
+
+É possível que perceber que caso um valor não seja maior que topo da min-heap ele consequentemente não será maior que nenhum outro elemento. Isso garante que nossa heap sempre terá os maiores elementos e pra isso é necessário fazer comparações apenas como o menor elemento.
+
+Para recuperar os K termos em ordem crescente de aparição, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade O(k).
 
 Portanto, a complexidade total da solução pode ser descrita como 
 
