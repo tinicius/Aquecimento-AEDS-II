@@ -30,20 +30,23 @@ Os primeiros K elementos da tabela hash serão inseridos na heap. Em seguida, pa
 
 Para recuperar os K termos em ordem crescente de aparição, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade O(k).
 
-Portanto, a complexidade total da solução pode ser descrita como 
+Portanto, a complexidade total da solução pode ser descrita como
 
-- O(n) → para percorrer as palavras do texto
-- O(k * log k) → para inserir os k primeiro itens
-- O( (n-k) * log k) → para tentar inserir o restante dos elementos na heap
-- O(k) → para exibir os K itens
+$O(n)$ → para percorrer as palavras do texto
 
-Simplificando, a complexidade do algoritmo pode ser descrita como O(n * log k).
+$O(k \cdot \log k)$ → para inserir os $k$ primeiro itens
+
+$O((n-k) \cdot \log k)$ → para tentar inserir o restante dos elementos na heap
+
+$O(k)$ → para exibir os $k$ itens
+
+Simplificando, a complexidade do algoritmo pode ser descrita como $O(n \cdot \log k)$.
 
 ## Implementação
 
 ### Lendo os arquivos
 
-Durante o programa são realizadas duas leituras, uma para buscar o texto de entrada e outra para as stopwords, ambas usando a bliblioteca fstream do C++.
+Durante o programa são realizadas duas leituras, uma para buscar os textos de entrada e outra para as stopwords, ambas usando a bliblioteca fstream do C++.
 
 As stopwords estão em um arquivo formatado de uma maneira especifica tendo cada palavra em uma linha. Assim, em nosso código é feita a leitura linha por linha e aplicando a palavra em umas das estruturas de hash.
 
