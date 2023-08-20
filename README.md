@@ -305,9 +305,9 @@ Time taken to execute in seconds : 0.542150
 ```
 
 Para comparar as implementações de hash iremos fazer um teste com 3 entradas, e calcular a média do tempo de execução para cada uma.
-Entrada 1: "DomCasmurro.txt"
-Entrada 2: "Semana_Machado_Assis.txt"
-Entrada 3: "DomCasmurro.txt" + "Semana_Machado_Assis.txt"
+- Entrada 1: "DomCasmurro.txt"
+- Entrada 2: "Semana_Machado_Assis.txt"
+- Entrada 3: "DomCasmurro.txt" + "Semana_Machado_Assis.txt"
 
 |           | unordered_map | meio dos quadrados |
 |-----------|---------------|--------------------|
