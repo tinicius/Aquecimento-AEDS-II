@@ -184,7 +184,6 @@ void insertElementsOnHeap(Heap& heap, Hash& freq_table, Hash& stopWordsMap) {
         pair<string, int> res = freq_table.at(w);
 
         if (counter < K) {
-            // cout << res.first << " " << res.second << endl;
             heap.push(res);
             counter++;
             continue;
@@ -238,19 +237,10 @@ int main() {
 
     heap.showHeapArray();
 
-    cout << "Elemetos ordenados:" << endl;
-
-    while (!heap.empty()) {
-        cout << heap.top().first << " " << heap.top().second << endl;
-        heap.pop();
-    }
-
-    //
-
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("\nTime taken to execute in seconds : %f\n", execution_time);
+    printf("Time taken to execute in seconds : %f\n", execution_time);
 
     // Hash Middle square
 
@@ -271,19 +261,10 @@ int main() {
 
     h.showHeapArray();
 
-    cout << "Elemetos ordenados:" << endl;
-
-    while (!h.empty()) {
-        cout << h.top().first << " " << h.top().second << endl;
-        h.pop();
-    }
-
-    //
-
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("\nTime taken to execute in seconds : %f\n", execution_time);
+    printf("Time taken to execute in seconds : %f\n", execution_time);
 
     return 0;
 }

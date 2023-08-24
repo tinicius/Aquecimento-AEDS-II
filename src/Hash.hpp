@@ -1,7 +1,9 @@
 #ifndef HASH_HPP
 #define HASH_HPP
 
+#include <cmath>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
