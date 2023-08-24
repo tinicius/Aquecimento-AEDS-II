@@ -56,7 +56,7 @@ Existem alguns caracteres especiais que são ignorados. Por exemplo, na palavra 
 
 ### Hash
 
-Vamos comparar a estrutura unordered_map com uma implementação de hash utilizando a função "Meio do Quadrado".
+Vamos utilizar duas implmenetações diferentes da estrutura de hash. O unordered_map, da biblioteca padrão do C++, e uma hash utilizando a função "Meio do Quadrado".
 
 ### unordered_map
 

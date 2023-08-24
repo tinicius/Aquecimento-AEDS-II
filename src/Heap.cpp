@@ -5,7 +5,6 @@ int Heap::size() { return this->array.size(); }
 bool Heap::empty() { return this->size() == 0; }
 
 void Heap::push(pair<string, int> item) {
-    // cout << item.first << " " << item.second << endl;
     this->array.push_back(item);
     this->heapify_up(size() - 1);
 }

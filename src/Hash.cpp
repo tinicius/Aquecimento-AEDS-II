@@ -2,14 +2,9 @@
 
 #define dbg(x) cout << #x << " = " << x << endl
 
-Hash::Hash() {
-    this->bucketsNumber = 100;
-    this->array.resize(bucketsNumber);
-}
+Hash::Hash() { this->array.resize(100); }
 
-Hash::~Hash() {
-    // clear?
-}
+Hash::~Hash() {}
 
 size_t sumDigits(string key) {
     size_t keySum = 0;
@@ -51,7 +46,7 @@ size_t Hash::hash(string key) {
     size_t square = keySum * keySum;
 
     size_t squareDigits = floor(log10(square) + 1);
-    size_t keyDigits = floor(log10(bucketsNumber) + 1);
+    size_t keyDigits = floor(log10(array.size()) + 1);
 
     size_t middle = getSquareMiddle(squareDigits, keyDigits, square);
 
@@ -67,9 +62,7 @@ void Hash::rehash() {
         if (a.second != 0) actual.push_back(a);
     }
 
-    this->bucketsNumber *= 100;
-
-    this->array.resize(bucketsNumber);
+    this->array.resize(array.size() * 100);
 
     for (auto& a : array) {
         a.first = "";

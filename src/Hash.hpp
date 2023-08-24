@@ -13,7 +13,6 @@ using namespace std;
 class Hash {
    private:
     vector<pair<string, int>> array;
-    size_t bucketsNumber;
     size_t hash(string key);
     void rehash();
 
@@ -25,6 +24,7 @@ class Hash {
     void insert(string key, int value);
     bool find(string key);
     pair<string, int> at(string key);
+    size_t size();
 };
 
 #endif
