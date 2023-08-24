@@ -24,7 +24,6 @@ class Hash {
     void insert(string key, int value);
     bool find(string key);
     pair<string, int> at(string key);
-    size_t size();
 };
 
 #endif

@@ -1,7 +1,5 @@
 #include "Hash.hpp"
 
-#define dbg(x) cout << #x << " = " << x << endl
-
 Hash::Hash() { this->array.resize(100); }
 
 Hash::~Hash() {}

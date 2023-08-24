@@ -1,6 +1,6 @@
 # Trabalho de Aquecimento
 
-## Introdução
+# Introdução
 
 No problema conhecido como "Top K Itens", o objetivo é desenvolver um algoritmo capaz de listar as palavras mais valiosas em um texto, selecionando as mais ou menos frequentes. Utilizando estruturas de hash e heap, é possível criar uma solução com complexidade computacional de $O(n \cdot \log k)$, onde $n$ é o número total de palavras e $k$ é a quantidade de palavras escolhidas.
 
@@ -10,7 +10,7 @@ Este trabalho tem como objetivo principal desenvolver um algoritmo que seja capa
 
 **Observação:** O programa considerará todos os arquivos dentro da pasta "dataset" como entrada, independentemente do nome. Com exceção do arquivo "stopwords.data", que contém termos a serem ignorados na listagem; este arquivo não deve ter seu nome alterado.
 
-## Solução
+# Solução
 
 Inicialmente, buscamos todos os termos dentro do arquivo de stopwords e os inserimos em uma estrutura de hash. Esses termos serão ignorados durante a contagem e não aparecerão na listagem final.
 
@@ -42,9 +42,9 @@ $O(k)$ → para exibir os $k$ itens
 
 Simplificando, a complexidade do algoritmo pode ser descrita como $O(n \cdot \log k)$.
 
-## Implementação
+# Implementação
 
-### Lendo os arquivos
+## Lendo os arquivos
 
 Durante o programa, são realizadas duas leituras: uma para buscar os textos de entrada e outra para as stopwords, ambas usando a biblioteca fstream do C++.
 
@@ -54,25 +54,43 @@ Já o texto de entrada, por ser um texto comum, é lido caractere por caractere,
 
 Existem alguns caracteres especiais que são ignorados. Por exemplo, na palavra “faça-se”, o caractere “-” é ignorado, e a palavra é contabilizada como “façase”.
 
-### Hash
-
-Vamos utilizar duas implmenetações diferentes da estrutura de hash. O unordered_map, da biblioteca padrão do C++, e uma hash utilizando a função "Meio do Quadrado".
-
-### unordered_map
+## unordered_map
 
 A estrutura `unordered_map` faz parte da biblioteca padrão do C++ e é definida na biblioteca `<map>`. Essa estrutura é uma implementação de hash que não ordena os itens armazenados. Para utilizá-la, é necessário definir o tipo de dado da chave e do valor entre os sinais de maior e menor, seguindo a sintaxe `unordered_map<tipo_chave, tipo_valor>`.
 
 Na nossa implementação, o tipo da chave é string e o tipo do valor é um inteiro, representando a palavra e sua frequência, respectivamente.
 
-### Meio do Quadrado
+## Meio do Quadrado
 
-Dentro dos atributos e métodos privados, temos o vetor onde os elementos são armazenados, o tamanho desse vetor (bucketsNumber) e os métodos `hash` e `rehash`.
+Dentro dos atributos e métodos privados, temos o vetor onde os elementos são armazenados e os métodos `hash` e `rehash`.
 
 O método de hash recebe como entrada uma chave e retorna um valor inteiro. Essa chave é uma palavra, e o valor é correspondente a um índice do vetor onde o elemento pode ser armazenado.
 
-Os valores ASCII de cada caractere são somados, transformando a palavra em um valor numérico. Esse valor é elevado ao quadrado, e dele é retirada a parte central, caracterizada pelos N elementos centrais. O valor de N é o número de dígitos no tamanho do vetor menos um. Por exemplo, se o vetor tem tamanho 100 e temos o número 44333112, o resultado será 
+Os valores ASCII de cada caractere são somados, transformando a palavra em um valor numérico. Esse valor é elevado ao quadrado, e dele é retirada a parte central, caracterizada pelos N elementos centrais. O valor de N é o número de dígitos da soma dos caracteres.
 
-33.
+### Exemplo
+
+```
+Inserindo a palavra  "aquecimento"
+
+soma = 1179
+quadrado = 1390041
+
+meio do quadrado = 900
+```
+
+```
+Inserindo a palavra  "algoritmo"
+
+soma = 974
+quadrado = 948676
+
+meio do quadrado = 867
+```
+
+Como o quadrado tem um número par de digitos o meio fica deslocado para a direita.
+
+### Hash e Rehash
 
 Todas as operações realizadas são constantes ou lineares. No entanto, o custo linear está relacionado ao número de dígitos e não ao valor em si, pois é necessário contar o número de dígitos e deslocar dígitos para obter o meio do quadrado.
 
@@ -80,20 +98,21 @@ Todas as operações realizadas são constantes ou lineares. No entanto, o custo
 size_t Hash::hash(string key) {
     size_t keySum = sumDigits(key);
     size_t square = keySum * keySum;
+    
+    size_t squareDigits = floor(log10(square) + 1);
+    size_t keyDigits = floor(log10(array.size()) + 1);
 
-    size_t digitsInArraySize = getDigitsInArraySize(this->array.size());
+    size_t middle = getSquareMiddle(squareDigits, keyDigits, square);
 
-    size_t squareDigits = getDigitsInSquare(square);
-
-    size_t middle = getSquareMiddle(squareDigits, digitsInArraySize, square);
+    if (middle >= this->array.size()) return middle % this->array.size();
 
     return middle;
 };
 ```
 
-O método de rehash aumenta o tamanho do vetor e reposiciona todos os elementos que já estavam nele. Essa função é chamada sempre que atingimos um fator de carga de 50%. O fator de carga é um valor obtido pela divisão do tamanho do vetor pelo número de elementos inseridos, ou seja, representa a ocupação do vetor.
+O método de rehash aumenta o tamanho do vetor e reposiciona todos os elementos que já estavam nele. Essa função é chamada sempre que atingimos um fator de carga de 75%. O fator de carga é um valor obtido pela divisão do tamanho do vetor pelo número de elementos inseridos, ou seja, representa a ocupação do vetor.
 
-Os motivos para a estrutura de hash não ter complexidade constante estão relacionados principalmente às colisões. Como não existe uma função de hashing perfeita que associe cada chave a um único índice, as colisões precisam ser tratadas. Nessa implementação, ao ocorrer uma colisão, percorremos linearmente o vetor até encontrar uma posição válida. Isso pode gerar um custo $O(n)$ para buscas e inserções.
+Os motivos para a estrutura de hash não ter complexidade constante estão relacionados principalmente às colisões. Como não existe uma função de hashing perfeita que associe cada chave a um único índice, as colisões precisam ser tratadas. Nessa implementação, ao ocorrer uma colisão, percorremos linearmente o vetor até encontrar uma posição válida. Isso pode gerar um custo $O(n)$ para buscas e inserções. Além disso ao percorrer o vetor caso encontremos um palavra é preciso comparar esta com a palavra que estamos tentando inserir. Isso se torna um grande problema pois como a comparação de strings tem custo linear a nossa função de inserir irá ter uma tendência quadratica para grandes entradas de dados.
 
 Para tentar diminuir esse gargalo, utilizamos a função de rehash. Ao aumentar o tamanho do vetor, diminuímos a chance de colisões. No entanto, para recalcular esse cálculo, temos um custo linear no número de elementos já inseridos. Portanto, é necessário o uso do fator de carga para chamar a função de rehash apenas quando o vetor estiver muito denso.
 
@@ -101,7 +120,6 @@ Para tentar diminuir esse gargalo, utilizamos a função de rehash. Ao aumentar 
 class Hash {
    private:
     vector<pair<string, int>> array;
-    size_t bucketsNumber;
     size_t hash(string key);
     void rehash();
 
@@ -200,18 +218,20 @@ void Heap::heapify_down(int index) {
 }
 ```
 
-## Resultados
+# Resultados
+
+## Saída
 
 A saída do programa tem o seguinte formato: exibir duas listas com as K palavras mais frequentes, uma mostrando a heap e a outra mostrando as palavras em ordem crescente. Isso é feito tanto para as duas implementações de hash.
 
 Exibir os elementos em ordem crescente é importante para validar o funcionamento correto da heap. Como podemos buscar os elementos de menor valor para mostrá-los em ordem crescente, a saída consiste em buscar e mostrar os elementos na heap.
 
-Para os arquivos dentro da pasta dataset, temos a seguinte saída:
+Para os arquivos dentro da pasta dataset, com K = 20, temos a seguinte saída:
 
 ```
 unordered_map
 
-Elementos na Heap:
+Elementos na Heap: 
 menos 408
 tão 426
 nada 452
@@ -223,47 +243,23 @@ vez 500
 todos 526
 bem 451
 grande 472
-a
-
-qui 507
-pode 604
-assim 610
-outros 495
-tudo 750
-outra 575
-ainda 768
-homem 537
-tempo 494
-
-Elementos ordenados:
-menos 408
-tão 426
-dias 443
-bem 451
-nada 452
-grande 472
-dia 475
-agora 476
-tempo 494
-vez 500
 aqui 507
-outros 495
-todos 526
-homem 537
-outra 575
-outro 582
 pode 604
 assim 610
+outros 495
 tudo 750
+outra 575
 ainda 768
+homem 537
+tempo 494
 
-Tempo de execução em segundos: 0.407632
+Time taken to execute in seconds : 0.332556
 
 ---------------
 
 Meio dos quadrados
 
-Elementos na Heap:
+Elementos na Heap: 
 menos 408
 bem 451
 tão 426
@@ -285,53 +281,33 @@ ainda 768
 homem 537
 pode 604
 
-Elementos ordenados:
-menos 408
-tão 426
-dias 443
-bem 451
-nada 452
-grande 472
-dia 475
-agora 476
-tempo 494
-outros 495
-vez 500
-aqui 507
-todos 526
-homem 537
-outra 575
-outro 582
-pode 604
-assim 610
-tudo 750
-ainda 768
-
-Tempo de execução em segundos: 0.542150
+Time taken to execute in seconds : 0.550004
 ```
 
-Para comparar as implementações de hash, realizamos um teste com 3 entradas diferentes e calculamos a média do tempo de execução para cada uma delas:
-- Entrada 1: "DomCasmurro.txt"
-- Entrada 2: "Semana_Machado_Assis.txt"
-- Entrada 3: "DomCasmurro.txt" + "Semana_Machado_Assis.txt"
+## Comparação unordered_map x meio dos quadrados
 
-|           | unordered_map | meio dos quadrados |
-|-----------|---------------|--------------------|
-| Entrada 1 | 0.075500      | 0.134379           |
-| Entrada 2 | 0.272346      | 0.374359           |
-| Entrada 3 | 0.322327      | 0.472777           |
+Para gerar os testes com criado um gerador de textos aleátorios. Esse gerador recebe como parametro o número de palavras e gera um arquivo com este número.
+Foram gerados textos de 0 a 64500 palavras. Cada um destes foi utilizado como entrada para ambas implementações. Realizando 3 execuções em cada, para gerar a média do tempo de execução.
 
-Os resultados mostram que a implementação utilizando `unordered_map` é mais eficiente em termos de tempo de execução em comparação com o método "meio dos quadrados". No entanto, a diferença de desempenho é menor do que o esperado, dado que o método "meio dos quadrados" é uma função de hash muito simples em comparação com outras implementações mais avançadas. Além disso, a implementação da biblioteca `unordered_map` utiliza várias otimizações, como operações bitwise, que melhoram o custo ao realizar manipulações com a chave.
+![](./images/comparacao.png)
 
-## Conclusão
+A partir dos testes obtemos 3 observações importantes.
+
+Para entradas de dados pequenas, até 10000 palavras, os algoritmos tiveram um comportavamento parecido. Tendo poucos milisegundos de diferença e mostrando um comportamento linear. Pórem, para o meio do quadrados, esse comportamento não se reflete para amostras maiores.
+
+Ao aumentar o volume de dados conseguimos perceber que o unordered_map manteve o custo linear esperado. Já a outra implementação, mostrou um corportamento quadratico. Esse comportamento está relacionado ao tratamento de colisões utilizado.
+
+Por enfim, podemos observar que mesmo com um comportamento pior para entradas maiores a implemetação meio dos quadrados ainda mantém uma diferença de tempo relativamente pequena para o contexto que estamos utilizando. Sendo uma escolha possível para esse solucionar problema.
+
+# Conclusão
 
 Neste trabalho, conseguimos analisar a eficiência de estruturas de dados para a resolução de problemas, especialmente a extração das palavras mais frequentes em textos relativamente grandes. Nessa situação, ao optar por métodos quadráticos ou até mesmo algoritmos de ordenação, teríamos um tempo de execução muito pior, possivelmente impedindo o programa de concluir a tarefa em um tempo razoável.
 
 Além disso, pudemos compreender melhor as estruturas de heap e hash. Para realizar o trabalho, foi necessário realizar várias pesquisas sobre o funcionamento desses algoritmos. A escolha de implementar essas estruturas em vez de usar soluções prontas contribuiu ainda mais para nosso entendimento.
 
-Por fim, conseguimos comparar duas implementações de hash. Os resultados mostraram que mesmo um método de hash simples, como o "meio dos quadrados", pode ser muito eficiente e até mesmo comparável às implementações utilizadas na biblioteca padrão, como o `unordered_map`.
+Por fim, conseguimos comparar duas implementações de hash. Os resultados mostraram que mesmo um método de hash simples, como o "meio dos quadrados", pode ser utilizado para solucionar certo problemas mas perde em performance quando comparado a outras implementações, por exemplo, a solução utlizado no `unordered_map` da biblioteca padrão.
 
-## COMPILAÇÃO E EXECUÇÃO
+# COMPILAÇÃO E EXECUÇÃO
 
 O algoritmo disponibilizado inclui um arquivo Makefile que facilita o processo de compilação e execução. Abaixo estão as diretrizes para compilar e executar o programa:
 
