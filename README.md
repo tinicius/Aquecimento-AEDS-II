@@ -9,7 +9,7 @@ Este trabalho tem como objetivo principal desenvolver um algoritmo que seja capa
 **Palavras-chave:** heap, min-heap, hash, unordered_map, meio dos quadrados.
 
 ### Observações
-- O programa considerará todos os arquivos dentro da pasta "dataset" como entrada, independentemente do nome. Com exceção do arquivo "stopwords.data", que contém termos a serem ignorados na listagem; este arquivo não deve ter seu nome alterado.
+- O programa considerará todos os arquivos dentro da pasta "dataset" como entrada, independentemente do nome. Com exceção do arquivo "stopwords.data", que contém termos a serem ignorados na listagem. Este arquivo não deve ter seu nome alterado.
 - O valor de K pode ser alterado dentro arquivo `main.cpp`.
 
 # Solução
@@ -280,6 +280,8 @@ pode 604
 
 Time taken to execute in seconds : 0.550004
 ```
+
+![](./images/heap1.png)
 
 ## Comparação unordered_map x meio dos quadrados
 
