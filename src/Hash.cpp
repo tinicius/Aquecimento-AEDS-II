@@ -1,6 +1,6 @@
 #include "Hash.hpp"
 
-Hash::Hash() { this->array.resize(100); }
+Hash::Hash() { array.resize(100); }
 
 Hash::~Hash() {}
 
@@ -48,7 +48,7 @@ size_t Hash::hash(string key) {
 
     size_t middle = getSquareMiddle(squareDigits, keyDigits, square);
 
-    if (middle >= this->array.size()) return middle % this->array.size();
+    if (middle >= array.size()) return middle % array.size();
 
     return middle;
 };
@@ -60,7 +60,7 @@ void Hash::rehash() {
         if (a.second != 0) actual.push_back(a);
     }
 
-    this->array.resize(array.size() * 100);
+    array.resize(array.size() * 100);
 
     for (auto& a : array) {
         a.first = "";
@@ -70,12 +70,12 @@ void Hash::rehash() {
     keys.clear();
 
     for (auto& k : actual) {
-        this->insert(k.first, k.second);
+        insert(k.first, k.second);
     }
 }
 
 void Hash::insert(string key, int value) {
-    size_t index = this->hash(key);
+    size_t index = hash(key);
 
     while (array[index].second != 0) {
         if (array[index].first == key) break;
@@ -98,12 +98,12 @@ void Hash::insert(string key, int value) {
     double loadFactor = (double)keys.size() / (double)array.size();
 
     if (loadFactor >= 0.75) {
-        this->rehash();
+        rehash();
     }
 }
 
 void Hash::insert(string key) {
-    size_t index = this->hash(key);
+    size_t index = hash(key);
 
     while (array[index].second != 0) {
         if (array[index].first == key) break;
@@ -126,34 +126,34 @@ void Hash::insert(string key) {
     double loadFactor = (double)keys.size() / (double)array.size();
 
     if (loadFactor >= 0.75) {
-        this->rehash();
+        rehash();
     }
 }
 
 bool Hash::find(string key) {
-    size_t index = this->hash(key);
+    size_t index = hash(key);
 
-    while (this->array[index].second != 0) {
-        if (this->array[index].first == key) return true;
-
-        index += 1;
-
-        if (index == this->array.size()) index = 0;
-    }
-
-    return false;
-}
-
-pair<string, int> Hash::at(string key) {
-    size_t index = this->hash(key);
-
-    while (this->array[index].second != 0) {
-        if (this->array[index].first == key) break;
+    while (array[index].second != 0) {
+        if (array[index].first == key) return true;
 
         index += 1;
 
         if (index == array.size()) index = 0;
     }
 
-    return this->array[index];
+    return false;
+}
+
+pair<string, int> Hash::at(string key) {
+    size_t index = hash(key);
+
+    while (array[index].second != 0) {
+        if (array[index].first == key) break;
+
+        index += 1;
+
+        if (index == array.size()) index = 0;
+    }
+
+    return array[index];
 }

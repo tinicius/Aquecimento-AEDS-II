@@ -156,7 +156,7 @@ void insertElementsOnHeap(Heap& heap, unordered_map<string, int>& freq_table,
                           unordered_map<string, int>& stopWordsMap) {
     int counter = 0;
 
-    for (auto w : freq_table) {
+    for (auto& w : freq_table) {
         if (stopWordsMap[w.first] > 0) continue;
 
         if (counter < K) {
@@ -178,61 +178,34 @@ void insertElementsOnHeap(Heap& heap, unordered_map<string, int>& freq_table,
 void insertElementsOnHeap(Heap& heap, Hash& freq_table, Hash& stopWordsMap) {
     int counter = 0;
 
-    for (auto w : freq_table.array) {
-        if (w.second == 0) continue;
-        if (stopWordsMap.at(w.first).second > 0) continue;
+    for (auto w : freq_table.keys) {
+        // if (w.second == 0) continue;
+        if (stopWordsMap.at(w).second > 0) continue;
 
-        // pair<string, int> res = freq_table.at(w);
+        pair<string, int> res = freq_table.at(w);
 
         if (counter < K) {
-            heap.push(w);
+            heap.push(res);
             counter++;
             continue;
         }
 
         auto menor = heap.top();
 
-        if (w.second > menor.second) {
+        if (res.second > menor.second) {
             heap.pop();
-            heap.push(w);
+            heap.push(res);
             counter++;
         }
     }
 }
 
-void getHeapElements(Heap& heap, vector<string>& ans) {
-    while (!heap.empty()) {
-        auto top = heap.top();
-        ans.push_back(top.first);
-        heap.pop();
-    }
-}
-
-void showElementsInCorrectOrder(vector<string>& ans) {
-    cout << "Elementos em ordem crescente: \n";
-
-    for (size_t i = 0; i < ans.size(); i++) {
-        cout << ans[i] << "\t";
-    }
-
-    cout << endl;
-}
-
-void cres(Heap& h) {
-    cout << "-----" << endl;
-    while (!h.empty()) {
-        auto a = h.top();
-        h.pop();
-        cout << a.first << ": " << a.second << endl;
-    }
-    cout << "-----" << endl;
-}
-
 int main() {
-    // unordered_map implemantation
-
     clock_t startExe, endExe;
     double execution_time;
+
+    // unordered_map implemantation
+
     startExe = clock();
 
     unordered_map<string, int> sw;
@@ -251,7 +224,7 @@ int main() {
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("Time taken to execute in seconds : %f\n", execution_time);
+    cout << "Time taken to execute: " << execution_time << " s" << endl;
 
     // Hash Middle square
 
@@ -270,17 +243,12 @@ int main() {
 
     cout << endl << "Meio dos quadrados" << endl << endl;
 
-    auto a = wordsFreq.at("menos");
-
     h.showHeapArray();
 
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
-    printf("Time taken to execute in seconds : %f\n", execution_time);
-
-    cres(heap);
-    cres(h);
+    cout << "Time taken to execute: " << execution_time << " s" << endl;
 
     return 0;
 }
