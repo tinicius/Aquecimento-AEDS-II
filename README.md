@@ -281,7 +281,14 @@ pode 604
 Time taken to execute in seconds : 0.550004
 ```
 
+### unordered_map
+
 ![](./images/heap1.png)
+
+
+### Meio dos quadrados
+
+![](./images/heap2.png)
 
 ## Comparação unordered_map x meio dos quadrados
 
