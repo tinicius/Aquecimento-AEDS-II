@@ -4,11 +4,13 @@
 
 No problema conhecido como "Top K Itens", o objetivo é desenvolver um algoritmo capaz de listar as palavras mais valiosas em um texto, selecionando as mais ou menos frequentes. Utilizando estruturas de hash e heap, é possível criar uma solução com complexidade computacional de $O(n \cdot \log k)$, onde $n$ é o número total de palavras e $k$ é a quantidade de palavras escolhidas.
 
-Este trabalho tem como objetivo principal desenvolver um algoritmo que seja capaz de listar os K termos mais frequentes em uma coleção de arquivos de texto. Além disso, serão implementadas estruturas de hash e heap. Por fim, será realizada uma comparação entre a função de hashing "Meio dos Quadrados" e a estrutura unordered_map.
+Este trabalho tem como objetivo principal desenvolver um algoritmo que seja capaz de listar os K termos mais frequentes em uma coleção de arquivos de texto. Além disso, serão implementadas estruturas de hash e heap. Por fim, será realizada uma comparação entre a função de hashing "Meio dos Quadrados" e a utilizada na implementação da estrutura unordered_map.
 
 **Palavras-chave:** heap, min-heap, hash, unordered_map, meio dos quadrados.
 
-**Observação:** O programa considerará todos os arquivos dentro da pasta "dataset" como entrada, independentemente do nome. Com exceção do arquivo "stopwords.data", que contém termos a serem ignorados na listagem; este arquivo não deve ter seu nome alterado.
+### Observações
+- O programa considerará todos os arquivos dentro da pasta "dataset" como entrada, independentemente do nome. Com exceção do arquivo "stopwords.data", que contém termos a serem ignorados na listagem; este arquivo não deve ter seu nome alterado.
+- O valor de K pode ser alterado dentro arquivo `main.cpp`.
 
 # Solução
 
@@ -28,7 +30,7 @@ Os primeiros K elementos da tabela hash serão inseridos na heap. Em seguida, pa
 
 É possível perceber que, caso um valor não seja maior que o topo da min-heap, ele consequentemente não será maior que nenhum outro elemento. Isso garante que nossa heap sempre terá os maiores elementos, e para isso, é necessário fazer comparações apenas com o menor elemento.
 
-Para recuperar os K termos em ordem crescente de aparição, basta ir buscando o topo da heap e imprimi-lo enquanto houver elementos na heap. Como buscar o topo tem complexidade constante, recuperar os K elementos terá complexidade $O(k)$.
+Para exibir os K termos iremos imprimir, sequencialmente, na tela o vetor que armazena os valores. É importante observar que é possível montar diferentes heaps para os mesmos valores e ambas serem validas.
 
 Portanto, a complexidade total da solução pode ser descrita como:
 
@@ -62,11 +64,8 @@ Na nossa implementação, o tipo da chave é string e o tipo do valor é um inte
 
 ## Meio do Quadrado
 
-Dentro dos atributos e métodos privados, temos o vetor onde os elementos são armazenados e os métodos `hash` e `rehash`.
-
-O método de hash recebe como entrada uma chave e retorna um valor inteiro. Essa chave é uma palavra, e o valor é correspondente a um índice do vetor onde o elemento pode ser armazenado.
-
-Os valores ASCII de cada caractere são somados, transformando a palavra em um valor numérico. Esse valor é elevado ao quadrado, e dele é retirada a parte central, caracterizada pelos N elementos centrais. O valor de N é o número de dígitos da soma dos caracteres.
+Para implementação desse algoritmo criamso uma função chamada `hash`. Ela terá como paramêtro uma string, que será a chave, e retornará o resultado do cálculo.
+Para obter o valor realizamos os seguintes cálculos. Os valores ASCII de cada caractere são somados, transformando a palavra em um valor numérico. Esse valor é elevado ao quadrado, e dele é retirada a parte central, caracterizada pelos N elementos centrais. O valor de N é o número de dígitos da soma dos caracteres.
 
 ### Exemplo
 
@@ -112,9 +111,9 @@ size_t Hash::hash(string key) {
 
 O método de rehash aumenta o tamanho do vetor e reposiciona todos os elementos que já estavam nele. Essa função é chamada sempre que atingimos um fator de carga de 75%. O fator de carga é um valor obtido pela divisão do tamanho do vetor pelo número de elementos inseridos, ou seja, representa a ocupação do vetor.
 
-Os motivos para a estrutura de hash não ter complexidade constante estão relacionados principalmente às colisões. Como não existe uma função de hashing perfeita que associe cada chave a um único índice, as colisões precisam ser tratadas. Nessa implementação, ao ocorrer uma colisão, percorremos linearmente o vetor até encontrar uma posição válida. Isso pode gerar um custo $O(n)$ para buscas e inserções. Além disso ao percorrer o vetor caso encontremos um palavra é preciso comparar esta com a palavra que estamos tentando inserir. Isso se torna um grande problema pois como a comparação de strings tem custo linear a nossa função de inserir irá ter uma tendência quadratica para grandes entradas de dados.
+Os motivos para a estrutura de hash não ter complexidade constante estão relacionados principalmente às colisões. Como não existe uma função de hashing perfeita que associe cada chave a um único índice, as colisões precisam ser tratadas. Nessa implementação, ao ocorrer uma colisão, percorremos linearmente o vetor até encontrar uma posição válida. Isso pode gerar um custo $O(n)$ para buscas e inserções. Além disso ao percorrer o vetor caso encontremos um palavra é preciso comparar esta com a palavra que estamos tentando inserir. Isso se torna um grande problema. pois como a comparação de strings tem custo linear a nossa função de inserir irá ter uma tendência quadrática para grandes entradas de dados.
 
-Para tentar diminuir esse gargalo, utilizamos a função de rehash. Ao aumentar o tamanho do vetor, diminuímos a chance de colisões. No entanto, para recalcular esse cálculo, temos um custo linear no número de elementos já inseridos. Portanto, é necessário o uso do fator de carga para chamar a função de rehash apenas quando o vetor estiver muito denso.
+Para tentar diminuir esse gargalo, utilizamos a função de rehash. Ao aumentar o tamanho do vetor, diminuímos a chance de colisões. No entanto para executar essa função temos um custo linear no número de elementos já inseridos. Portanto, é necessário o uso do fator de carga para chamar a função de rehash apenas quando o vetor estiver muito denso.
 
 ```cpp
 class Hash {
@@ -222,9 +221,7 @@ void Heap::heapify_down(int index) {
 
 ## Saída
 
-A saída do programa tem o seguinte formato: exibir duas listas com as K palavras mais frequentes, uma mostrando a heap e a outra mostrando as palavras em ordem crescente. Isso é feito tanto para as duas implementações de hash.
-
-Exibir os elementos em ordem crescente é importante para validar o funcionamento correto da heap. Como podemos buscar os elementos de menor valor para mostrá-los em ordem crescente, a saída consiste em buscar e mostrar os elementos na heap.
+A saída do programa tem o seguinte formato: exibir duas listas com as K palavras mais frequentes, mostrando o vetor interno da heap, para as duas implementações.
 
 Para os arquivos dentro da pasta dataset, com K = 20, temos a seguinte saída:
 
