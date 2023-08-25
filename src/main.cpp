@@ -178,22 +178,23 @@ void insertElementsOnHeap(Heap& heap, unordered_map<string, int>& freq_table,
 void insertElementsOnHeap(Heap& heap, Hash& freq_table, Hash& stopWordsMap) {
     int counter = 0;
 
-    for (string w : freq_table.keys) {
-        if (stopWordsMap.at(w).second > 0) continue;
+    for (auto w : freq_table.array) {
+        if (w.second == 0) continue;
+        if (stopWordsMap.at(w.first).second > 0) continue;
 
-        pair<string, int> res = freq_table.at(w);
+        // pair<string, int> res = freq_table.at(w);
 
         if (counter < K) {
-            heap.push(res);
+            heap.push(w);
             counter++;
             continue;
         }
 
         auto menor = heap.top();
 
-        if (res.second > menor.second) {
+        if (w.second > menor.second) {
             heap.pop();
-            heap.push(res);
+            heap.push(w);
             counter++;
         }
     }
@@ -215,6 +216,16 @@ void showElementsInCorrectOrder(vector<string>& ans) {
     }
 
     cout << endl;
+}
+
+void cres(Heap& h) {
+    cout << "-----" << endl;
+    while (!h.empty()) {
+        auto a = h.top();
+        h.pop();
+        cout << a.first << ": " << a.second << endl;
+    }
+    cout << "-----" << endl;
 }
 
 int main() {
@@ -259,12 +270,17 @@ int main() {
 
     cout << endl << "Meio dos quadrados" << endl << endl;
 
+    auto a = wordsFreq.at("menos");
+
     h.showHeapArray();
 
     endExe = clock();
     execution_time = ((double)(endExe - startExe)) / CLOCKS_PER_SEC;
 
     printf("Time taken to execute in seconds : %f\n", execution_time);
+
+    cres(heap);
+    cres(h);
 
     return 0;
 }

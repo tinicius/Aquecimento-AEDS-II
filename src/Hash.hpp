@@ -12,7 +12,7 @@ using namespace std;
 
 class Hash {
    private:
-    vector<pair<string, int>> array;
+   
     size_t hash(string key);
     void rehash();
 
@@ -20,6 +20,7 @@ class Hash {
     Hash();
     virtual ~Hash();
     vector<string> keys;
+     vector<pair<string, int>> array;
     void insert(string key);
     void insert(string key, int value);
     bool find(string key);

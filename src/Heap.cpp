@@ -1,21 +1,21 @@
 #include "Heap.hpp"
 
-int Heap::size() { return this->array.size(); }
+int Heap::size() { return array.size(); }
 
-bool Heap::empty() { return this->size() == 0; }
+bool Heap::empty() { return size() == 0; }
 
 void Heap::push(pair<string, int> item) {
-    this->array.push_back(item);
-    this->heapify_up(size() - 1);
+    array.push_back(item);
+    heapify_up(size() - 1);
 }
 
-pair<string, int> Heap::top() { return this->array[0]; }
+pair<string, int> Heap::top() { return array[0]; }
 
 void Heap::pop() {
-    if (this->array.size() == 0) return;
+    if (array.size() == 0) return;
 
-    this->array[0] = this->array.back();
-    this->array.pop_back();
+    array[0] = array.back();
+    array.pop_back();
 
     heapify_down(0);
 }
@@ -24,24 +24,24 @@ void Heap::heapify_down(int index) {
     int left = (2 * index) + 1;
     int right = (2 * index) + 2;
 
-    int smaller = index;
+    int smallerIndex = index;
 
-    int childLeft = this->array[left].second;
-    int childRight = this->array[right].second;
+    int childLeftFreq = array[left].second;
+    int childRightFreq = array[right].second;
 
-    int indexFreq = this->array[index].second;
+    int parentFreq = array[index].second;
 
-    if (left < this->size() && childLeft < indexFreq) {
-        smaller = left;
+    if (left < size() && childLeftFreq < parentFreq) {
+        smallerIndex = left;
     }
 
-    if (right < this->size() && childRight < childLeft) {
-        smaller = right;
+    if (right < size() && childRightFreq < array[smallerIndex].second) {
+        smallerIndex = right;
     }
 
-    if (smaller != index) {
-        swap(this->array[smaller], this->array[index]);
-        heapify_down(smaller);
+    if (smallerIndex != index) {
+        swap(array[smallerIndex], array[index]);
+        heapify_down(smallerIndex);
     }
 }
 
@@ -62,8 +62,8 @@ void Heap::heapify_up(int index) {
 void Heap::showHeapArray() {
     cout << "Elementos na Heap: \n";
 
-    for (size_t i = 0; i < this->array.size(); i++)
-        cout << this->array[i].first << " " << this->array[i].second << endl;
+    for (size_t i = 0; i < array.size(); i++)
+        cout << array[i].first << " " << array[i].second << endl;
 
     cout << endl;
 }

@@ -125,7 +125,7 @@ void Hash::insert(string key) {
 
     double loadFactor = (double)keys.size() / (double)array.size();
 
-    if (loadFactor >= 0.5) {
+    if (loadFactor >= 0.75) {
         this->rehash();
     }
 }
