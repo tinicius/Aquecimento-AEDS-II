@@ -2,7 +2,7 @@
 
 ## Introdução
 
-No problema conhecido como "Top K Itens", o objetivo é desenvolver um algoritmo capaz de listar as palavras mais valiosas em um texto, selecionando as mais ou menos frequentes. Utilizando estruturas de hash e heap, é possível criar uma solução com complexidade computacional de $O(n \cdot \log k)$, onde $n$ é o número total de palavras e $k$ é a quantidade de palavras escolhidas.
+No problema conhecido como "Top K Itens", o objetivo é desenvolver um algoritmo capaz de listar as K palavras mais valiosas em um texto, selecionando as mais ou menos frequentes. Sendo esse K, um valor especificado pelo usuário. Utilizando estruturas de hash e heap, é possível criar uma solução com complexidade computacional de $O(n \cdot \log k)$, onde $n$ é o número total de palavras e $k$ é a quantidade de palavras escolhidas.
 
 Este trabalho tem como objetivo principal desenvolver um algoritmo que seja capaz de listar os K termos mais frequentes em uma coleção de arquivos de texto. Além disso, serão implementadas estruturas de hash e heap. Por fim, será realizada uma comparação entre a função de hashing "Meio dos Quadrados" e a utilizada na implementação da estrutura unordered_map.
 
