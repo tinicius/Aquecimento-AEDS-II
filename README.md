@@ -263,17 +263,17 @@ Time taken to execute in seconds : 0.550004
 
 #### unordered_map
 
-![unordered_map](imagem1.png)
+![unordered_map](./images/heap1.png)
 
 #### Meio dos quadrados
 
-![Meio dos quadrados](imagem2.png)
+![Meio dos quadrados](./images/heap2.png)
 
 ### Comparação unordered_map x meio dos quadrados
 
 Para gerar os testes, criamos um gerador de textos aleatórios. Este gerador recebe como parâmetro o número de palavras e gera um arquivo com esse número. Foram gerados textos de 0 a 64.500 palavras. Cada um desses textos foi utilizado como entrada para ambas implementações, realizando 3 execuções em cada, para gerar a média do tempo de execução.
 
-![Comparação](imagem3.png)
+![Comparação](./images/comparacao.png)
 
 A partir dos testes, observamos três pontos importantes:
 
